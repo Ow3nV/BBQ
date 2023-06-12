@@ -37,6 +37,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'BBQ',
+    'bbqweb',
+    'auth',
+    'crispy_forms',
 ]
 
 MIDDLEWARE = [
@@ -69,6 +73,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'BBQ.wsgi.application'
+CRISPY_TEMPLATE_PACK = 'uni_form'
 
 
 # Database

@@ -19,5 +19,6 @@ from django.urls import path, include
 
 urlpatterns = [
     path('', include('bbqweb.urls')),
+    path('member', include('auth.urls')),
     path('admin/', admin.site.urls),
 ]
