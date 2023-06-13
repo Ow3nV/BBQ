@@ -1,0 +1,11 @@
+{% extends 'base/base.html' %}
+{% block title %} BBQ Admin - View all BBQs{% endblock %}
+{% block template %}
+    {{ bbq.name }}<br>
+    {{ bbq.dimensions }}<br>
+    {{ bbq.value }}<br>
+    {{ bbq.rent }}<br>
+    {{ bbq.delivery }}<br>
+    <img src="{{ bbq.image.url }}" alt="img" width="384px" height="216px">
+
+{% endblock %}

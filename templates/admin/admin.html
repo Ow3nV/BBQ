@@ -3,7 +3,10 @@
     BBQ Rental - Admin
 {% endblock %}
 {% block template %}
-    <h4>Username: {{ user.username }}</h4>
-	<h4>Email: {{ user.email }}</h4>
+    <h4>Username: {{ user.username }}
+    <br>Email: {{ user.email }}
+    <br><a href="bbq_form">Add a BBQ</a>
+    <br><a href="view_all_bbqs">View all BBQs</a>
+    </h4>
 
 {% endblock %}
