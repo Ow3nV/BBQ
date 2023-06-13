@@ -1,11 +1,14 @@
 {% extends 'base/base.html' %}
 {% block title %} BBQ Admin - View all BBQs{% endblock %}
 {% block template %}
-    {{ bbq.name }}<br>
-    {{ bbq.dimensions }}<br>
-    {{ bbq.value }}<br>
-    {{ bbq.rent }}<br>
-    {{ bbq.delivery }}<br>
-    <img src="{{ bbq.image.url }}" alt="img" width="384px" height="216px">
+    <img src="{{ bbq.image.url }}" alt="img" width="384px" height="216px"><br>
+    Name: {{ bbq.name }}<br>
+    Length: {{ bbq.length }} Width: {{ bbq.width }} Height: {{ bbq.height }}<br>
+    Value: {{ bbq.value }}<br>
+    Rent(p/day): {{ bbq.rent_day }}<br>
+    Rent(p/week): {{ bbq.rent_week }}<br>
+    Rent(p/month): {{ bbq.rent_month }}<br>
+    Delivery Price: {{ bbq.delivery }}<br>
+    About: {{ bbq.about }}
 
 {% endblock %}
