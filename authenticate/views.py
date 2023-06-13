@@ -11,7 +11,7 @@ def register_request(request):
             user = form.save()
             login(request, user)
             messages.success(request, "Registration successful.")
-            return redirect("/")
+            return redirect("index")
         messages.error(request, "Unsuccessful registration. Invalid information.")
     form = NewUserForm()
     return render(request, template_name="auth/register.html", context={"register_form": form})
@@ -22,9 +22,9 @@ def login_user(request):
     if request.method == "POST":
         form = LoginForm(request.POST)
         if form.is_valid():
-            email = form.cleaned_data.get('email')
+            username = form.cleaned_data.get('username')
             password = form.cleaned_data.get('password')
-            user = authenticate(request, email=email, password=password)
+            user = authenticate(request, username=username, password=password)
             if user is not None:
                 login(request, user)
                 messages.success(request, "You are now logged in.")
@@ -38,3 +38,6 @@ def login_user(request):
 def logout_view(request):
     logout(request)
     return redirect("index")
+
+def profile_view(request):
+    return render(request, "auth/profile.html")

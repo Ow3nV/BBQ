@@ -21,5 +21,5 @@ class NewUserForm(UserCreationForm):
 
 
 class LoginForm(forms.Form):
-    email = forms.EmailField(required=True, help_text="Enter your email address.")
+    username = forms.CharField(required=True, help_text="Enter your username")
     password = forms.CharField(widget=forms.PasswordInput, required=True, help_text="Enter your password.")
