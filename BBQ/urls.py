@@ -22,3 +22,5 @@ urlpatterns = [
     path('member/', include('authenticate.urls')),
     path('admin/', admin.site.urls),
 ]
+
+handler404 = "BBQ.views.page_not_found_view"
