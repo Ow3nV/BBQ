@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from .forms import NewUserForm, LoginForm
 from django.contrib.auth import login, authenticate, logout
@@ -11,7 +12,7 @@ def register_request(request):
             user = form.save()
             login(request, user)
             messages.success(request, "Registration successful.")
-            return redirect("index")
+            return redirect("home")
         messages.error(request, "Unsuccessful registration. Invalid information.")
     form = NewUserForm()
     return render(request, template_name="auth/register.html", context={"register_form": form})
@@ -28,16 +29,19 @@ def login_user(request):
             if user is not None:
                 login(request, user)
                 messages.success(request, "You are now logged in.")
-                return redirect("index")
+                return redirect("home")
             else:
                 messages.error(request, 'Invalid credentials')
 
     return render(request, "auth/login.html", {"form": form})
 
 
+@login_required
 def logout_view(request):
     logout(request)
-    return redirect("index")
+    return redirect("home")
 
+
+@login_required
 def profile_view(request):
     return render(request, "auth/profile.html")
