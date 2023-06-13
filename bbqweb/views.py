@@ -5,3 +5,6 @@ from django.shortcuts import render
 
 def index(request):
     return render(request, 'bbq/bbqhome.html')
+
+def bbq_rent(request):
+    return render(request, 'bbq/bbqrent.html')
