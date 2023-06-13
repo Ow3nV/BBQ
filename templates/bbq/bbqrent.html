@@ -3,5 +3,20 @@
     BBQ Rental - Rent
 {% endblock %}
 {% block template %}
-    <h3> Whale cum to our small business so we can fail to become millionaires </h3>
+    <body>
+      <div class="row gy-2">
+        {% for x in bbqs %}
+        <div class="col-md-3">
+          <div class="thumbnail">
+            <a href="{% url 'view_bbq' x.id %}">
+              <img src="{{ x.image.url }}" alt="img" width="384px" height="216px">
+              <div class="caption">
+                  {{ x.name }}
+              </div>
+            </a>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </body>
 {% endblock %}
