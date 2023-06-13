@@ -1,10 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends "base/base.html" %}
+{% block title %}
+    BBQ Rental - Profile
+{% endblock %}
+{% block template %}
+    <h4>Username: {{ user.username }}</h4>
+	<h4>Email: {{ user.email }}</h4>
 
-</body>
-</html>
+{% endblock %}
