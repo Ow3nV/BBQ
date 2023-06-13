@@ -18,3 +18,8 @@ class NewUserForm(UserCreationForm):
         if commit:
             user.save()
         return user
+
+
+class LoginForm(forms.Form):
+    email = forms.EmailField(required=True, help_text="Enter your email address.")
+    password = forms.CharField(widget=forms.PasswordInput, required=True, help_text="Enter your password.")
