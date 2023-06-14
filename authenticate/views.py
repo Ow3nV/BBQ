@@ -6,6 +6,7 @@ from django.contrib import messages
 
 
 def register_request(request):
+    form = NewUserForm()
     if request.method == "POST":
         form = NewUserForm(request.POST)
         if form.is_valid():
@@ -14,7 +15,6 @@ def register_request(request):
             messages.success(request, "Registration successful.")
             return redirect("home")
         messages.error(request, "Unsuccessful registration. Invalid information.")
-    form = NewUserForm()
     return render(request, template_name="auth/register.html", context={"register_form": form})
 
 def login_user(request):
