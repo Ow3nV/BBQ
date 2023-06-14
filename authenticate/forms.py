@@ -7,8 +7,8 @@ from django.core.validators import EmailValidator
 # Create your forms here.
 
 class NewUserForm(UserCreationForm):
-    username = forms.CharField(error_messages={'required':"you're gay"})
-    email = forms.EmailField(required=True, validators=[EmailValidator(message='gay')])
+    email = forms.EmailField(required=True)
+
     class Meta:
         model = User
         fields = ("username", "email", "password1", "password2")
