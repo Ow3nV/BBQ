@@ -14,3 +14,11 @@ class Barbeque(models.Model):
     delivery = models.IntegerField()
     pickup = models.IntegerField()
     about = models.TextField(null=True)
+
+
+class Images(models.Model):
+    barbeque = models.ForeignKey(Barbeque, on_delete=models.CASCADE)
+    image1 = models.ImageField(null=True, blank=True, upload_to='images/')
+    image2 = models.ImageField(null=True, blank=True, upload_to='images/')
+    image3 = models.ImageField(null=True, blank=True, upload_to='images/')
+    image4 = models.ImageField(null=True, blank=True, upload_to='images/')

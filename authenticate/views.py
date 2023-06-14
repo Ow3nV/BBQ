@@ -39,6 +39,7 @@ def login_user(request):
 @login_required
 def logout_view(request):
     logout(request)
+    messages.success(request, "You are now logged out.")
     return redirect("home")
 
 
