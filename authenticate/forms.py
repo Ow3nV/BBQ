@@ -7,7 +7,7 @@ from django.core.validators import EmailValidator, RegexValidator
 # Create your forms here.
 
 class NewUserForm(UserCreationForm):
-    username = forms.CharField(validators=RegexValidator(regex='^[a-z]+$', message='gay'))
+    username = forms.CharField(validators=RegexValidator(regex=r'^[a-z]+$', message='gay'))
     email = forms.EmailField(required=True)
 
     class Meta:
