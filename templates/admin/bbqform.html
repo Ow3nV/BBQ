@@ -15,6 +15,13 @@ BBQ Admin - Add BBQ
         {{ image_form|crispy }}
 		<button class="btn btn-primary" type="submit">Add</button>
 	</form>
+    {% if form.errors %}
+        {% for field in form %}
+        {% for error in field.errors %}
+            <p> {{ errors }} </p>
+        {% endfor %}
+        {% endfor %}
+    {% endif %}
 </div>
 
 {% endblock %}

@@ -14,6 +14,8 @@ def admin(request):
 
 
 def create_bbq(request):
+    form = BarbequeForm()
+    form2 = ImageForm()
     if request.method == "POST":
         form = BarbequeForm(request.POST, request.FILES)
         form2 = ImageForm(request.POST, request.FILES)
@@ -25,8 +27,6 @@ def create_bbq(request):
             messages.success(request, "BBQ Added Successfully")
             return redirect("admin")
         messages.error(request, "Unsuccessful Invalid information.")
-    form = BarbequeForm()
-    form2 = ImageForm()
     if request.user.is_superuser:
         return render(request, "admin/bbqform.html", context={"register_form": form, "image_form": form2})
     else:
