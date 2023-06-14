@@ -1,12 +1,13 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-from django.core.validators import EmailValidator
+from django.core.validators import EmailValidator, RegexValidator
 
 
 # Create your forms here.
 
 class NewUserForm(UserCreationForm):
+    username = forms.CharField(validators=RegexValidator(regex='^[a-z]+$', message='gay'))
     email = forms.EmailField(required=True)
 
     class Meta:
