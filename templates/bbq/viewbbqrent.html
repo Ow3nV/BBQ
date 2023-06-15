@@ -46,41 +46,50 @@
 
         </div>
         </div>
+<div class="col-md-7">
+  <div class="row" style="margin-bottom: 1%; margin-top: 4%">
     <div class="col-md-7">
-      <div class="row" style="margin-bottom: 1%; margin-top: 4%">
-        <div class="col-md-7">
-          <h1>Name: {{ bbq.name }}<br></h1>
-        </div>
-      </div>
-      <div class="row" style="margin-bottom: 1%;">
-        <div class="col-md-6">
-          Length: {{ bbq.length }} Width: {{ bbq.width }} Height: {{ bbq.height }}<br>
-        </div>
-      </div>
-      <div class="row">
-        {% if bbq.rent_day > 0 %}
-        <div class="col-md-4">
-          Rent(p/day): {{ bbq.rent_day }}<br>
-        </div>
-        {% endif %}
-        {% if bbq.rent_week > 0 %}
-        <div class="col-md-4">
-          Rent(p/week): {{ bbq.rent_week }}<br>
-        </div>
-        {% endif %}
-        {% if bbq.rent_month > 0 %}
-        <div class="col-md-4">
-          Rent(p/month): {{ bbq.rent_month }}<br>
-        </div>
-        {% endif %}
-      </div>
-      <div class="row">
-        <div class="col-md-6">
-          Delivery Price: {{ bbq.delivery }}<br>
-          About: {{ bbq.about }}
-        </div>
+      <h1>{{ bbq.name }}<br></h1>
+    </div>
+  </div>
+  <div class="row" style="margin-bottom: 1%;">
+    <div class="col-md-6">
+      <div class="section-container">
+        <p>{{ bbq.about }}</p>
+        <table class="table">
+          <tbody>
+            <tr>
+              {% if bbq.rent_day > 0 %}
+              <td class="first-column"">Rent(p/day):</td>
+              <td>{{ bbq.rent_day }}</td>
+              {% endif %}
+            </tr>
+            <tr>
+              {% if bbq.rent_week > 0 %}
+              <td class="first-column">Rent(p/week):</td>
+              <td>{{ bbq.rent_week }}</td>
+              {% endif %}
+            </tr>
+            <tr>
+              {% if bbq.rent_month > 0 %}
+              <td class="first-column">Rent(p/month):</td>
+              <td>{{ bbq.rent_month }}</td>
+              {% endif %}
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      Delivery Price: {{ bbq.delivery }}<br>
+    </div>
+  </div>
+</div>
+
+
+
  </div>
 
     <div class="row">
