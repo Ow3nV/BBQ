@@ -9,13 +9,6 @@ class BarbequeForm(ModelForm):
         fields = '__all__'
 
 
-class BarbequeEditForm(ModelForm):
-    class Meta:
-        model = Barbeque
-        fields = '__all__'
-        exclude = ('image',)
-
-
 class ImageForm(ModelForm):
     class Meta:
         model = Images

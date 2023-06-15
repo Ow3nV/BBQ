@@ -1,5 +1,7 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
+from django.urls import reverse_lazy
+
 from .forms import NewUserForm, LoginForm
 from django.contrib.auth import login, authenticate, logout
 from django.contrib import messages
@@ -36,11 +38,13 @@ def login_user(request):
     return render(request, "auth/login.html", {"form": form})
 
 
-
 def logout_view(request):
-    logout(request)
-    messages.success(request, "You are now logged out.")
-    return redirect("home")
+    if request.user.is_authenticated:
+        logout(request)
+        messages.success(request, "You are now logged out.")
+        return redirect("home")
+    messages.warning(request, "You are not logged in")
+    return redirect('home')
 
 
 @login_required
