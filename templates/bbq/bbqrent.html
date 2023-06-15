@@ -17,9 +17,9 @@
     </div>
         {% for x in bbqs %}
         <div class="col-md-3">
-            <div class="card" style="width: 18rem; margin:4% ;background-color: #75fffb">
+            <div class="card_style card" style="background-color: #0000ff">
                 <a href="{% url 'view_bbq_rent' x.id %}">
-                <img src="{{ x.image.url }}" class="figure-img img-fluid rounded" alt='{{ x.id }}'>
+                <img src="{{ x.image.url }}" class="figure-img img-fluid rounded img_centre_card" alt='{{ x.id }}'>
                 <h5 class="'card-title text-center">{{ x.name }}</h5>
                 </a>
                 <h6 class="'card-text text-center">{{ x.rent_day }} per day</h6>

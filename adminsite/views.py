@@ -65,3 +65,9 @@ def view_bbq(request, barbeque_id):
         image_list.append(imgs.image4.url)
 
     return render(request, "admin/viewbbq.html", {'bbq': bbq, 'imgs': image_list})
+
+
+def delete_bbq(request, barbeque_id):
+    Barbeque.objects.get(id=barbeque_id).delete()
+    messages.success(request, "BBQ deleted")
+    return redirect('admin_view_all_bbqs')

@@ -6,5 +6,6 @@ urlpatterns = [
     path('bbq_form', views.create_bbq, name='admin_bbq_form'),
     path('admin_view', views.view_all_bbq, name='admin_view_all_bbqs'),
     path('bbq/<barbeque_id>', views.view_bbq, name='admin_view_bbq'),
-    path('bbq/<barbeque_id>/edit', views.edit_bbq, name='admin_edit')
+    path('bbq/<barbeque_id>/edit', views.edit_bbq, name='admin_edit'),
+    path('bbq_delete/<barbeque_id>', views.delete_bbq, name='bbq_delete')
 ]

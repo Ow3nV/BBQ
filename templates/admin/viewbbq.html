@@ -61,7 +61,8 @@
     Delivery Price: {{ bbq.delivery }}<br>
     Pickup Price: {{ bbq.pickup }}<br>
     About: {{ bbq.about }}<br>
-    <a href="{% url 'admin_edit' bbq.id %}">Edit</a>
+    <a href="{% url 'admin_edit' bbq.id %}">Edit</a><br>
+    <a href="{% url 'bbq_delete' bbq.id %}">Delete</a>
     </div>
 
 {% endblock %}
