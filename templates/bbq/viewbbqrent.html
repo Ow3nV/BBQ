@@ -6,100 +6,82 @@
 </style>
 
     <div class="row">
-    <div class="col-md-5">
-    <div class="test_centre">
-          <div id="carouselExample" class="carousel carousel-dark slide" data-interval="false">
-          <div class="carousel-indicators">
-            <button type="button" data-bs-target="#carouselExample" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-              {% if imgs.0 %}
-                <button type="button" data-bs-target="#carouselExample" data-bs-slide-to="1" aria-label="Slide 2"></button>
-              {% if imgs.1 %}
-                <button type="button" data-bs-target="#carouselExample" data-bs-slide-to="2" aria-label="Slide 3"></button>
-              {% if imgs.2 %}
-                  <button type="button" data-bs-target="#carouselExample" data-bs-slide-to="3" aria-label="Slide 4"></button>
-              {% if imgs.3 %}
-                  <button type="button" data-bs-target="#carouselExample" data-bs-slide-to="4" aria-label="Slide 5"></button>
-              {% endif %}
-              {% endif %}
-              {% endif %}
-              {% endif %}
+        <div class="col-md-5">
+        <div class="test_centre">
+              <div id="carouselExample" class="carousel carousel-dark slide" data-interval="false">
+              <div class="carousel-indicators">
+                <button type="button" data-bs-target="#carouselExample" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                  {% if imgs.0 %}
+                    <button type="button" data-bs-target="#carouselExample" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                  {% if imgs.1 %}
+                    <button type="button" data-bs-target="#carouselExample" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                  {% if imgs.2 %}
+                      <button type="button" data-bs-target="#carouselExample" data-bs-slide-to="3" aria-label="Slide 4"></button>
+                  {% if imgs.3 %}
+                      <button type="button" data-bs-target="#carouselExample" data-bs-slide-to="4" aria-label="Slide 5"></button>
+                  {% endif %}
+                  {% endif %}
+                  {% endif %}
+                  {% endif %}
 
-          </div>
-          <div class="carousel-inner"  style="border-style: solid;">
-            <div class="carousel-item active" >
+              </div>
+              <div class="carousel-inner"  style="border-style: solid;">
+                <div class="carousel-item active" >
 
-              <img class="d-block mx-auto" src="{{ bbq.image.url }}" alt="First slide" width="100%" height="100%">
-            </div>
-              {% if imgs.0 %}
-            <div class="carousel-item">
-              <img class="d-block mx-auto" src="{{ imgs.0 }}" alt="Second slide" width="100%" height="100%">
-            </div>
-              {% if imgs.1 %}
-            <div class="carousel-item">
-              <img class="d-block mx-auto" src="{{ imgs.1 }}" alt="Third slide" width="100%" height="100%">
-            </div>
-              {% if imgs.2 %}
-              <div class="carousel-item">
-              <img class="d-block mx-auto" src="{{ imgs.2 }}" alt="Fourth slide" width="100%" height="100%">
+                  <img class="d-block mx-auto" src="{{ bbq.image.url }}" alt="First slide" width="100%" height="100%">
+                </div>
+                {% for img in imgs %}
+                    <div class="carousel-item">
+                    <img class="d-block mx-auto" src="{{ img }}" alt="Slide" width="100%" height="100%">
+                    </div>
+                {% endfor %}
+              </div>
+                 <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                  </button>
+                  <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                  </button>
+                </div>
 
-            </div>
-              {% if imgs.3 %}
-              <div class="carousel-item">
-              <img class="d-block mx-auto" src="{{ imgs.3 }}" alt="Fifth slide" width="100%" height="100%">
-            </div>
-              {% endif %}
-              {% endif %}
-              {% endif %}
-              {% endif %}
-
-
-          </div>
-             <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-              </button>
-              <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-              </button>
-            </div>
-
+        </div>
+        </div>
+    <div class="col-md-7">
+      <div class="row" style="margin-bottom: 1%; margin-top: 4%">
+        <div class="col-md-7">
+          <h1>Name: {{ bbq.name }}<br></h1>
+        </div>
+      </div>
+      <div class="row" style="margin-bottom: 1%;">
+        <div class="col-md-6">
+          Length: {{ bbq.length }} Width: {{ bbq.width }} Height: {{ bbq.height }}<br>
+        </div>
+      </div>
+      <div class="row">
+        {% if bbq.rent_day > 0 %}
+        <div class="col-md-4">
+          Rent(p/day): {{ bbq.rent_day }}<br>
+        </div>
+        {% endif %}
+        {% if bbq.rent_week > 0 %}
+        <div class="col-md-4">
+          Rent(p/week): {{ bbq.rent_week }}<br>
+        </div>
+        {% endif %}
+        {% if bbq.rent_month > 0 %}
+        <div class="col-md-4">
+          Rent(p/month): {{ bbq.rent_month }}<br>
+        </div>
+        {% endif %}
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          Delivery Price: {{ bbq.delivery }}<br>
+          About: {{ bbq.about }}
+        </div>
+      </div>
     </div>
-    </div>
-     <div class="col-md-7">
-     <div class="row">
-     <div class="col-md-7" style="margin-bottom: 1%; margin-top: 4%">
-        <h1>Name: {{ bbq.name }}<br></h1>
-     </div>
-     </div>
-     <div class="row">
-     <div class="col-md-6" style="margin-bottom: 1%;">
-    Length: {{ bbq.length }} Width: {{ bbq.width }} Height: {{ bbq.height }}<br>
-     </div>
-     </div>
-     <div class="row">
-     <div class="col-md-4">
-    {% if bbq.rent_day > 0 %}
-    Rent(p/day): {{ bbq.rent_day }}<br>
-    {% endif %}
-     </div>
-     <div class="col-md-4">
-    {% if bbq.rent_week > 0 %}
-    Rent(p/week): {{ bbq.rent_week }}<br>
-    {% endif %}
-     </div>
-     <div class="col-md-4">
-    {% if bbq.rent_month > 0 %}
-    Rent(p/month): {{ bbq.rent_month }}<br>
-    {% endif %}
-     </div>
-     </div>
-     <div class="row">
-     <div class="col-md-6">
-    Delivery Price: {{ bbq.delivery }}<br>
-    About: {{ bbq.about }}
-     </div>
-    </div>
-    </div>
-    </div>
+ </div>
 
     <div class="row">
     <div class="col-md-5">
