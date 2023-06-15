@@ -1,10 +1,14 @@
 {% extends 'base/base.html' %}
 {% block title %} BBQ Rental - {{ bbq.name }}{% endblock %}
 {% block template %}
+<style>
+
+</style>
+
     <div class="row">
     <div class="col-md-6">
-    <div style="max-width:80%; margin:4%">
-          <div id="carouselExample" class="carousel carousel-fade" data-interval="false">
+    <div style="max-width:80%; margin:4%;">
+          <div id="carouselExample" class="carousel slide" data-interval="false">
           <div class="carousel-indicators">
             <button type="button" data-bs-target="#carouselExample" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
               {% if imgs.0 %}
@@ -19,32 +23,43 @@
               {% endif %}
               {% endif %}
               {% endif %}
+
           </div>
           <div class="carousel-inner">
             <div class="carousel-item active">
-              <img class="d-block" src="{{ bbq.image.url }}" alt="First slide" width="100%" height="100%">
+
+              <img class="d-block mx-auto" src="{{ bbq.image.url }}" alt="First slide" width="100%" height="100%">
             </div>
+            <!--{% for img in imgs %}
+                 {% if img %}
+                <div class="carousel-item">
+                  <img class="d-block mx-auto" src="{{ img }}" alt="Slide {{ forloop.counter }}" style="max-width: 100%; max-height: 100%;">
+                </div>
+                {% endif %}
+              {% endfor %}-->
               {% if imgs.0 %}
             <div class="carousel-item">
-              <img class="d-block" src="{{ imgs.0 }}" alt="Second slide" width="100%" height="100%">
+              <img class="d-block mx-auto" src="{{ imgs.0 }}" alt="Second slide" width="100%" height="360px">
             </div>
               {% if imgs.1 %}
             <div class="carousel-item">
-              <img class="d-block" src="{{ imgs.1 }}" alt="Third slide" width="100%" height="100%">
+              <img class="d-block mx-auto" src="{{ imgs.1 }}" alt="Third slide" width="100%" height="360px">
             </div>
               {% if imgs.2 %}
               <div class="carousel-item">
-              <img class="d-block" src="{{ imgs.2 }}" alt="Fourth slide" width="100%" height="100%">
+              <img class="d-block mx-auto" src="{{ imgs.2 }}" alt="Fourth slide" width="100%" height="360px">
 
             </div>
               {% if imgs.3 %}
               <div class="carousel-item">
-              <img class="d-block" src="{{ imgs.3 }}" alt="Fifth slide" width="100%" height="100%">
+              <img class="d-block mx-auto" src="{{ imgs.3 }}" alt="Fifth slide" width="100%" height="100%">
             </div>
               {% endif %}
               {% endif %}
               {% endif %}
               {% endif %}
+
+
           </div>
              <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
