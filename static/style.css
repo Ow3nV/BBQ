@@ -1,15 +1,65 @@
 #gaytest{
-    background-color: #6a1a21;
+    background-color: #ffffff;
     overflow-x: hidden;
 }
 .carousel-item {
   justify-content: center;
   align-items: center;
-  max-height:500px;
+  height:500px;
+  /*max-height: 500px;*/
 }
 .carousel-item img {
   max-width: 100%;
   max-height: 100%;
-  max-height:500px;
   object-fit: contain;
+}
+
+.support-bubble {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  width: 60px;
+  height: 60px;
+  background-color: red;
+  border-radius: 50%;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.support-icon {
+  font-size: 30px;
+  color: white;
+}
+
+.popup {
+  position: absolute;
+  bottom: calc(100% + 5px);
+  left: 0;
+  width: 200px;
+  background-color: white;
+  border: 1px solid gray;
+  border-radius: 5px;
+  padding: 10px;
+  display: none;
+}
+
+.img_centre_card {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  max-width:384px;
+  max-height:216px;
+}
+
+.card_style{
+  width: 18rem;
+  margin:4%;
+}
+
+.test_centre{
+  display: block;
+  margin: 3% auto 2%;
+  max-width:80%;
 }

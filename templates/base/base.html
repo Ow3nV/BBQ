@@ -1,6 +1,8 @@
 {% load static %}
+
 <!doctype html>
 <html lang="en">
+<script src="{% static 'brain.js' %}"></script>
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -54,6 +56,14 @@
   </symbol>
 </svg>
   <body id="gaytest">
+    <div class="support-bubble">
+  <span class="support-icon">?</span>
+  <div class="popup">
+    <p>Test</p>
+  </div>
+</div>
+
+
     {% if messages %}
         {% for message in messages %}
             {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
