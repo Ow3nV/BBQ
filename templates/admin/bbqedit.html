@@ -1,11 +1,15 @@
-{% extends "base/base.html" %}
+	{% extends "base/base.html" %}
 {% block title %}
 BBQ Admin - Edit BBQ
 {% endblock %}
 {% block template %}
 
 {% load crispy_forms_filters %}
-
+<style>
+    #nav_color{
+    background-color: #EE4B2B
+    }
+</style>
 <div class="container py-5">
 	<h1>Edit</h1>
 	<form action="" method="post" enctype="multipart/form-data">

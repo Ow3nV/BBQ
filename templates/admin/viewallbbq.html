@@ -2,6 +2,11 @@
 {% load static %}
 {% block title %} BBQ Admin - View all BBQs{% endblock %}
 {% block template %}
+<style>
+    #nav_color{
+    background-color: #EE4B2B
+    }
+</style>
 <body>
     <div class="row gy-2">
         {% for x in bbqs %}
