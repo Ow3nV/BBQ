@@ -6,8 +6,8 @@ from order.models import Order
 
 
 class OrderForm(ModelForm):
-    date_from = forms.DateField(widget=SelectDateWidget(empty_label=("Choose Day", "Choose Month", "Choose Year")))
-    date_to = forms.DateField(widget=SelectDateWidget(empty_label=("Choose Day", "Choose Month", "Choose Year")))
+    date_from = forms.DateField(widget=AdminDateWidget())
+    date_to = forms.DateField(widget=AdminDateWidget())
     class Meta:
         model = Order
         fields = '__all__'
