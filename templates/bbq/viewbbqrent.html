@@ -1,30 +1,29 @@
 {% extends 'base/base.html' %}
+{% load static %}
+{% load mathfilters %}
 {% block title %} BBQ Rental - {{ bbq.name }}{% endblock %}
 {% block template %}
-<style>
-
-</style>
 
     <div class="row">
         <div class="col-md-5">
         <div class="test_centre">
               <div id="carouselExample" class="carousel carousel-dark slide" data-interval="false">
-              <div class="carousel-indicators">
-                <button type="button" data-bs-target="#carouselExample" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-                  {% if imgs.0 %}
-                    <button type="button" data-bs-target="#carouselExample" data-bs-slide-to="1" aria-label="Slide 2"></button>
-                  {% if imgs.1 %}
-                    <button type="button" data-bs-target="#carouselExample" data-bs-slide-to="2" aria-label="Slide 3"></button>
-                  {% if imgs.2 %}
-                      <button type="button" data-bs-target="#carouselExample" data-bs-slide-to="3" aria-label="Slide 4"></button>
-                  {% if imgs.3 %}
-                      <button type="button" data-bs-target="#carouselExample" data-bs-slide-to="4" aria-label="Slide 5"></button>
-                  {% endif %}
-                  {% endif %}
-                  {% endif %}
-                  {% endif %}
+                  <div class="carousel-indicators">
+                    <button type="button" data-bs-target="#carouselExample" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                      {% if imgs.0 %}
+                        <button type="button" data-bs-target="#carouselExample" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                      {% if imgs.1 %}
+                        <button type="button" data-bs-target="#carouselExample" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                      {% if imgs.2 %}
+                          <button type="button" data-bs-target="#carouselExample" data-bs-slide-to="3" aria-label="Slide 4"></button>
+                      {% if imgs.3 %}
+                          <button type="button" data-bs-target="#carouselExample" data-bs-slide-to="4" aria-label="Slide 5"></button>
+                      {% endif %}
+                      {% endif %}
+                      {% endif %}
+                      {% endif %}
 
-              </div>
+                  </div>
               <div class="carousel-inner"  style="border-style: solid;">
                 <div class="carousel-item active" >
 
@@ -45,39 +44,49 @@
                 </div>
 
         </div>
+
+            <div style="display:flex; align-items: center; flex-direction:column">
+            <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSpecs" aria-expanded="false" aria-controls="collapseSpecs">
+                    View specifications
+            </button>
+                <div class="collapse" id="collapseSpecs">
+                    <div class="card card-body">
+                        <p>This is the content that will be expanded or collapsed.</p>
+                    </div>
+                 </div>
+            </div>
         </div>
-<div class="col-md-7">
-  <div class="row" style="margin-bottom: 1%; margin-top: 4%">
     <div class="col-md-7">
+  <div class="row" style="margin-bottom: 1%; margin-top: 4%">
+    <div class="col-md-5">
       <h1>{{ bbq.name }}<br></h1>
     </div>
   </div>
   <div class="row" style="margin-bottom: 1%;">
-    <div class="col-md-6">
-      <div class="section-container">
+    <div class="col-md-5">
+      <div class="section-container" >
         <p>{{ bbq.about }}</p>
-        <table class="table">
-          <tbody>
-            <tr>
-              {% if bbq.rent_day > 0 %}
-              <td class="first-column">Rent(p/day):</td>
-              <td>{{ bbq.rent_day }}</td>
-              {% endif %}
-            </tr>
-            <tr>
-              {% if bbq.rent_week > 0 %}
-              <td class="first-column">Rent(p/week):</td>
-              <td>{{ bbq.rent_week }}</td>
-              {% endif %}
-            </tr>
-            <tr>
-              {% if bbq.rent_month > 0 %}
-              <td class="first-column">Rent(p/month):</td>
-              <td>{{ bbq.rent_month }}</td>
-              {% endif %}
-            </tr>
-          </tbody>
-        </table>
+        <div style="display: flex; justify-content: center;">
+            <table class="table" style="width: 400px;">
+                <tr>
+                  <td>Rent(p/day):</td>
+                  <td>{{ bbq.rent }}</td>
+
+                </tr>
+                <tr>
+                  <td>Rent(p/day over a week):</td>
+                  <td>{{ bbq.rent|mul:0.65}}</td>
+
+                </tr>
+                <tr>
+
+                  <td>Rent(p/day over a month):</td>
+                  <td>{{ bbq.rent|mul:0.5}}</td>
+
+                </tr>
+
+            </table>
+        </div>
       </div>
     </div>
   </div>
@@ -105,14 +114,5 @@
 
  </div>
 
-    <div class="row">
-    <div class="col-md-5">
-    <div style="text-align: center">
-        Test specs<br>
-        4000mmx3000mmx8000mm<br>
-        a lot of characters in a row so its long
-    </div>
-    </div>
-    </div>
 
 {% endblock %}
