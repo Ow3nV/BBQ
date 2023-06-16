@@ -68,9 +68,9 @@ def checkout_bbq(request, barbeque_id):
                 if days.days < 7:
                     price = days.days * order.barbeque.rent_day
                 elif 7 < days.days < 28:
-                    price = days.days * order.barbeque.rent_week
+                    price = days.days * order.barbeque.rent_day * 0.65
                 else:
-                    price = days.days * order.barbeque.rent_month
+                    price = days.days * order.barbeque.rent_day * 0.5
                 if order.delivery:
                     price += order.barbeque.delivery
                 if order.pick_up:
