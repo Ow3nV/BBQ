@@ -16,7 +16,7 @@
       </ul>
     </div>
         {% for x in bbqs %}
-        <div class="col-md-3">
+        <div class="col-md-2">
             <div class="card_style card" style="background-color: #0000ff">
                 <a href="{% url 'view_bbq_rent' x.id %}">
                 <img src="{{ x.image.url }}" class="figure-img img-fluid rounded img_centre_card" alt='{{ x.id }}'>

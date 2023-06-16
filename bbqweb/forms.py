@@ -21,7 +21,7 @@ MY_CHOICES2 = ((1, 0),
 class BarbequeForm(ModelForm):
     burners = forms.ChoiceField(choices=MY_CHOICES2)
     side_burners = forms.ChoiceField(choices=MY_CHOICES2)
-    gas = forms.MultipleChoiceField(choices=MY_CHOICES)
+    gas = forms.ChoiceField(choices=MY_CHOICES)
 
     class Meta:
         model = Barbeque

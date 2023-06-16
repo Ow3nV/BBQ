@@ -4,3 +4,4 @@ from django.db import models
 class Gas(models.Model):
     type = models.CharField()
     weight = models.IntegerField()
+    price_kg = models.IntegerField()
