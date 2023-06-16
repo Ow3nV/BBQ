@@ -5,9 +5,13 @@ from django.forms import ModelForm, SelectDateWidget
 from order.models import Order
 
 
+class DateInput(forms.DateInput):
+    input_type = 'date'
+
+
 class OrderForm(ModelForm):
-    date_from = forms.DateField(widget=AdminDateWidget())
-    date_to = forms.DateField(widget=AdminDateWidget())
+    date_from = forms.DateField(widget=DateInput)
+    date_to = forms.DateField(widget=DateInput)
     class Meta:
         model = Order
         fields = '__all__'

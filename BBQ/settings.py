@@ -138,6 +138,11 @@ STATIC_ROOT = "/static"
 
 LOGIN_URL = reverse_lazy("login")
 
+USE_L10N = False
+
+DATE_FORMAT = "%D/%M/%Y"
+
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
