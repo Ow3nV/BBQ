@@ -64,7 +64,18 @@ def checkout_bbq(request, barbeque_id):
                 order = form.save(commit=False)
                 order.barbeque = Barbeque.objects.get(id=barbeque_id)
                 order.user = User.objects.get(id=request.user.id)
-                order.sub_total = 5
+                days = order.date_to - order.date_from
+                if days.days < 7:
+                    price = days.days * order.barbeque.rent_day
+                elif 7 < days.days < 28:
+                    price = days.days * order.barbeque.rent_week
+                else:
+                    price = days.days * order.barbeque.rent_month
+                if order.delivery:
+                    price += order.barbeque.delivery
+                if order.pick_up:
+                    price += order.barbeque.pickup
+                order.sub_total = price
                 order.save()
                 messages.success(request, "Order Successful")
                 return redirect("home")
