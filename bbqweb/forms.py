@@ -4,18 +4,18 @@ from django.forms import ModelForm
 from bbqweb.models import Barbeque, Images
 
 
-MY_CHOICES = ((1, 'Butane'),
+MY_CHOICES = (('Butane', 'Butane'),
               ('Propane', 'Propane'),
-              (3, 'Both'),
-              (4, 'Neither'))
+              ('Both', 'Both'),
+              ('Neither', 'Neither'))
 
-MY_CHOICES2 = ((1, 0),
-               (2, 1),
-               (3, 2),
-               (4, 3),
-               (5, 4),
-               (6, 5),
-               (7, 6),)
+MY_CHOICES2 = ((0, '0'),
+               (1, '1'),
+               (2, '2'),
+               (3, '3'),
+               (4, '4'),
+               (5, '5'),
+               (6, '6'),)
 
 
 class BarbequeForm(ModelForm):
