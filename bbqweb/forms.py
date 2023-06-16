@@ -5,7 +5,7 @@ from bbqweb.models import Barbeque, Images
 
 
 MY_CHOICES = ((1, 'Butane'),
-              (2, 'Propane'),
+              ('Propane', 'Propane'),
               (3, 'Both'),
               (4, 'Neither'))
 
