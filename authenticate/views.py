@@ -1,7 +1,9 @@
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 
+from order.models import Order
 from .forms import NewUserForm, LoginForm
 from django.contrib.auth import login, authenticate, logout
 from django.contrib import messages
@@ -58,5 +60,13 @@ def logout_view(request):
 def profile_view(request):
     if request.user.is_authenticated:
         return render(request, "auth/profile.html")
+    messages.warning(request, "You are not logged in")
+    return redirect('home')
+
+
+def view_orders(request):
+    if request.user.is_authenticated:
+        orders = Order.objects.filter(user_id=request.user.id)
+        return render(request, "auth/orders.html", {"orders": orders})
     messages.warning(request, "You are not logged in")
     return redirect('home')
