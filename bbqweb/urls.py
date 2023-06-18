@@ -9,5 +9,4 @@ urlpatterns = [
     path('rent_sort=low', views.bbq_rent_day, name='rent_a_bbq_low'),
     path('rent_sort=high', views.bbq_rent_day_high, name='rent_a_bbq_high'),
     path('rent_sort=name', views.bbq_rent_name, name='rent_a_bbq_name'),
-    path('checkout/<barbeque_id>', views.checkout_bbq, name='checkout_bbq')
 ]

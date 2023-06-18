@@ -1,7 +1,7 @@
 {% extends "base/base.html" %}
 {% load static %}
 {% block title %}
-BBQ Checkout
+Select Dates
 {% endblock %}
 {% block template %}
 
@@ -10,11 +10,11 @@ BBQ Checkout
 </style>
 <!--Register-->
 <div class="container py-5">
-	<h1>Checkout</h1>
+	<h1>Select Dates</h1>
 	<form action="" method="post" enctype="multipart/form-data">
 		{% csrf_token %}
-		{{ order_form|crispy }}
-		<button class="btn btn-primary" type="submit">Total: £{{ price|floatformat:2 }}</button>
+		{{ form|crispy }}
+		<button class="btn btn-primary" type="submit">Order</button>
 	</form>
     {% if form.errors %}
         {% for field in form %}

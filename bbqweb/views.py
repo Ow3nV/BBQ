@@ -53,34 +53,3 @@ def view_bbq(request, barbeque_id):
         image_list.append(imgs.image4.url)
 
     return render(request, "bbq/viewbbqrent.html", {'bbq': bbq, 'imgs': image_list})
-
-
-def checkout_bbq(request, barbeque_id):
-    if request.user.is_authenticated:
-        form = OrderForm()
-        if request.method == "POST":
-            form = OrderForm(request.POST)
-            if form.is_valid():
-                order = form.save(commit=False)
-                order.barbeque = Barbeque.objects.get(id=barbeque_id)
-                order.user = User.objects.get(id=request.user.id)
-                days = order.date_to - order.date_from
-                if days.days < 7:
-                    price = days.days * order.barbeque.rent
-                elif 7 < days.days < 28:
-                    price = days.days * order.barbeque.rent * 0.65
-                else:
-                    price = days.days * order.barbeque.rent * 0.5
-                if order.delivery:
-                    price += order.barbeque.delivery
-                if order.pick_up:
-                    price += order.barbeque.pickup
-                order.sub_total = price
-                order.save()
-                messages.success(request, "Order Successful")
-                return redirect("home")
-            messages.error(request, "Unsuccessful Invalid information.")
-        return render(request, 'bbq/bbqcheckout.html', {'order_form' : form})
-    else:
-        messages.warning(request, 'Please Log In')
-        return redirect('view_bbq_rent', barbeque_id)
