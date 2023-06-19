@@ -4,8 +4,11 @@ from django.forms import ModelForm, SelectDateWidget
 
 from order.models import Order
 
-CHOICES = ((True, 'Yes'),
-           (False, 'No'))
+CHOICES = ((True, 'Yes - I Want My Barbeque Delivered'),
+           (False, 'No- I Will Pick Up My Barbeque'))
+
+CHOICES2 = ((True, 'Yes - I Want You To Pick Up My Barbeque After'),
+            (False, 'No - I Will Drop Off My Barbeque After'))
 
 
 class DateInput(forms.DateInput):
@@ -25,4 +28,4 @@ class CalenderForm(forms.Form):
     date_from = forms.DateField(widget=DateInput)
     date_to = forms.DateField(widget=DateInput)
     delivery = forms.ChoiceField(choices=CHOICES)
-    pickup = forms.ChoiceField(choices=CHOICES)
+    pickup = forms.ChoiceField(choices=CHOICES2)
