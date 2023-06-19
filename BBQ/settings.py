@@ -147,3 +147,5 @@ DATE_FORMAT = "%D/%M/%Y"
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+
+
