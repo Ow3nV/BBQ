@@ -19,8 +19,17 @@ def home(request):
 
 
 def bbq_rent(request):
-    bbqs = Barbeque.objects.all()
-    return render(request, "bbq/bbqrent.html", {'bbqs': bbqs})
+    sort_option = request.GET.get('sort')
+
+    if sort_option == 'high':
+        queryset = Barbeque.objects.order_by('-rent')
+    elif sort_option == 'low':
+        queryset = Barbeque.objects.order_by('rent')
+    elif sort_option == 'name':
+        queryset = Barbeque.objects.order_by('name')
+    else:
+        queryset = Barbeque.objects.all()
+    return render(request, "bbq/bbqrent.html", {'bbqs': queryset})
 
 
 def bbq_rent_day(request):

@@ -49,10 +49,10 @@
             Sort By
         </button>
         <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="{% url 'rent_a_bbq' %}">Default</a></li>
-            <li><a class="dropdown-item" href="{% url 'rent_a_bbq_high' %}">Price: High-Low</a></li>
-            <li><a class="dropdown-item" href="{% url 'rent_a_bbq_low' %}">Price: Low-High</a></li>
-            <li><a class="dropdown-item" href="{% url 'rent_a_bbq_name' %}">Name: A-Z</a></li>
+          <li><a class="dropdown-item" href="{% url 'rent_a_bbq' %}">Default</a></li>
+          <li><a class="dropdown-item" href="{% url 'rent_a_bbq' %}?sort=high">Price: High-Low</a></li>
+          <li><a class="dropdown-item" href="{% url 'rent_a_bbq' %}?sort=low">Price: Low-High</a></li>
+          <li><a class="dropdown-item" href="{% url 'rent_a_bbq' %}?sort=name">Name: A-Z</a></li>
         </ul>
     </div>
 
