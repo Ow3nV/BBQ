@@ -4,6 +4,7 @@
 <html lang="en">
 <script src="{% static 'brain.js' %}"></script>
 <script src="{% static 'user_dropdown.js' %}"></script>
+
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -18,7 +19,7 @@
           <ul style="position:absolute;top:0;right:50px;margin:10px;" class="navbar-nav">
             <li class="nav-item dropdown">
               <a class="btn btn dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                <img src="/media/images/profilePlaceholder.png" alt="placeholder" width="30"height="30">
+                <img src="/static/images/profilePlaceholder.png" alt="placeholder" width="30"height="30">
               </a>
               <ul  class="dropdown-menu dropdown-menu-end">
                   {% if user.is_superuser%}
