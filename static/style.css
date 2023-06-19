@@ -129,3 +129,7 @@
 .show {
   display: block;
 }
+
+#dropdown-background {
+  background-color: lightblue;
+}

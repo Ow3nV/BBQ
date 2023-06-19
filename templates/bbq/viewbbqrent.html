@@ -89,13 +89,13 @@
                 </tr>
                 <tr>
                   <td>Rent(p/day over a week):</td>
-                  <td>{{ bbq.rent|mul:0.65}}</td>
+                  <td>{{ bbq.rent|mul:0.65|floatformat:2}}</td>
 
                 </tr>
                 <tr>
 
                   <td>Rent(p/day over a month):</td>
-                  <td>{{ bbq.rent|mul:0.5}}</td>
+                  <td>{{ bbq.rent|mul:0.5|floatformat:2}}</td>
 
                 </tr>
 

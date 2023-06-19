@@ -20,7 +20,6 @@ def home(request):
 
 def bbq_rent(request):
     bbqs = Barbeque.objects.all()
-
     return render(request, "bbq/bbqrent.html", {'bbqs': bbqs})
 
 
