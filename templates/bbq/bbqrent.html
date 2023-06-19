@@ -9,12 +9,12 @@
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
         gap: 20px;
-         margin-left: 10px; /* Add a slight margin to the left side */
+        margin-left: 10px; /* Add a slight margin to the left side */
         margin-right: 10px;
     }
 
     .card_style {
-        background-color: #808080;
+        background-color: #00ffff;
     }
 
     .card {
@@ -44,39 +44,95 @@
         justify-content: space-between;
         margin-top:30px;
     }
+
+    .sidebar {
+        background-color: #f8f9fa;
+        padding: 20px;
+    }
+
+    .filter-section h5 {
+        margin-bottom: 10px;
+    }
+
+    .sidebar button[type="submit"] {
+        margin-top: 20px;
+    }
+
+    /* Added style for active filter */
+    .active-filter {
+        font-weight: bold;
+    }
 </style>
 
-
-<div style="justify-content:center" class="row gy-1">
-    <div class="dropdown-center">
-        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" style="float:right; margin:10px">
-            Sort By
-        </button>
-        <ul class="dropdown-menu">
-          <li><a class="dropdown-item" href="{% url 'rent_a_bbq' %}">Default</a></li>
-          <li><a class="dropdown-item" href="{% url 'rent_a_bbq' %}?sort=high">Price: High-Low</a></li>
-          <li><a class="dropdown-item" href="{% url 'rent_a_bbq' %}?sort=low">Price: Low-High</a></li>
-          <li><a class="dropdown-item" href="{% url 'rent_a_bbq' %}?sort=name">Name: A-Z</a></li>
-        </ul>
-    </div>
-
-    <div class="container">
-        <div class="card-grid">
-            {% for x in bbqs %}
-            <div class="card" style="background-color:#BEBEBE">
-                <a style="text-decoration: none;" href="{% url 'view_bbq_rent' x.id %}">
-                    <img src="{{ x.image.url }}" class="figure-img img-fluid rounded img_centre_card" alt="{{ x.id }}">
-                    <h5 class="card-title">{{ x.name }}</h5>
-                </a>
-                <h6 class="card-text">{{ x.rent }} per day</h6>
-                <div class="card-buttons">
-                    <a href="{% url 'view_bbq_rent' x.id %}" style="width:50%" class="btn btn-success btn-custom">View details</a>
-                    <a href="#" class="btn btn-outline-primary btn-custom-sm"><img src="/static/images/cart.png" alt="placeholder" width="30" height="30"></a>
-                </div>
+<div class="container">
+    <div class="row">
+        <div class="col-lg-3">
+            <div class="sidebar">
+                <h4>Filter</h4>
+                <form action="{% url 'rent_a_bbq' %}" method="GET">
+                    <div class="filter-section">
+                        <h5>Gas</h5>
+                        <div class="form-group">
+                            <select class="form-control" name="gas" id="filterGas">
+                                <option value="">Select Gas Option</option>
+                                <option value="Butane"{% if filter_gas == 'Butane' %} selected{% endif %}>Butane</option>
+                                <option value="Propane"{% if filter_gas == 'Propane' %} selected{% endif %}>Propane</option>
+                                <option value="Both"{% if filter_gas == 'Both' %} selected{% endif %}>Both</option>
+                                <option value="Neither"{% if filter_gas == 'Neither' %} selected{% endif %}>Neither</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="filter-section">
+                        <h5>Burners</h5>
+                        <div class="form-group">
+                            <label for="burnerRange">Number of Burners:</label>
+                            <input class="form-control" type="number" name="burners" id="burnerRange" min="0" max="6" value="{{ filter_burners }}">
+                        </div>
+                    </div>
+                    <div class="filter-section">
+                        <h5>Price Range</h5>
+                        <div class="form-group">
+                            <label for="priceMin">Minimum Price:</label>
+                            <input class="form-control" type="number" name="price_min" id="priceMin" step="any" value="{{ filter_price_min }}">
+                        </div>
+                        <div class="form-group">
+                            <label for="priceMax">Maximum Price:</label>
+                            <input class="form-control" type="number" name="price_max" id="priceMax" step="any" value="{{ filter_price_max }}">
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Apply Filter</button>
+                </form>
             </div>
-            {% endfor %}
+        </div>
+        <div class="col-lg-9">
+            <div class="dropdown-center">
+                <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" style="float:right; margin:10px">
+                    Sort By
+                </button>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="{% url 'rent_a_bbq' %}">Default</a></li>
+                    <li><a class="dropdown-item" href="{% url 'rent_a_bbq' %}?sort=high">Price: High-Low</a></li>
+                    <li><a class="dropdown-item" href="{% url 'rent_a_bbq' %}?sort=low">Price: Low-High</a></li>
+                    <li><a class="dropdown-item" href="{% url 'rent_a_bbq' %}?sort=name">Name: A-Z</a></li>
+                </ul>
+            </div>
+
+            <div class="card-grid">
+                {% for x in bbqs %}
+                <div class="card">
+                    <a style="text-decoration: none;" href="{% url 'view_bbq_rent' x.id %}">
+                        <img src="{{ x.image.url }}" class="figure-img img-fluid rounded img_centre_card" alt="{{ x.id }}">
+                        <h5 class="card-title">{{ x.name }}</h5>
+                    </a>
+                    <h6 class="card-text">{{ x.rent }} per day</h6>
+                    <div class="card-buttons">
+                        <a href="{% url 'view_bbq_rent' x.id %}" style="width:50%" class="btn btn-success btn-custom">View details</a>
+                        <a href="#" class="btn btn-outline-primary btn-custom-sm"><img src="/static/images/cart.png" alt="placeholder" width="30" height="30"></a>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
         </div>
     </div>
 </div>
-
 {% endblock %}

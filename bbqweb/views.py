@@ -29,22 +29,33 @@ def bbq_rent(request):
         queryset = Barbeque.objects.order_by('name')
     else:
         queryset = Barbeque.objects.all()
-    return render(request, "bbq/bbqrent.html", {'bbqs': queryset})
 
+    gas_filter = request.GET.get('gas')
+    burners_filter = request.GET.get('burners')
+    price_min_filter = request.GET.get('price_min')
+    price_max_filter = request.GET.get('price_max')
 
-def bbq_rent_day(request):
-    bbqs = Barbeque.objects.all().order_by('rent')
-    return render(request, "bbq/bbqrent.html", {'bbqs': bbqs})
+    if gas_filter:
+        queryset = queryset.filter(gas=gas_filter)
+    if burners_filter:
+        queryset = queryset.filter(burners=burners_filter)
+    if price_min_filter and price_max_filter:
+        queryset = queryset.filter(rent__gte=price_min_filter, rent__lte=price_max_filter)
+    elif price_min_filter:
+        queryset = queryset.filter(rent__gte=price_min_filter)
+    elif price_max_filter:
+        queryset = queryset.filter(rent__lte=price_max_filter)
 
+    context = {
+        'bbqs': queryset,
+        'filter_gas': gas_filter,
+        'filter_burners': burners_filter,
+        'filter_price_min': price_min_filter,
+        'filter_price_max': price_max_filter,
+        'sort_option': sort_option
+    }
 
-def bbq_rent_day_high(request):
-    bbqs = Barbeque.objects.all().order_by('-rent')
-    return render(request, "bbq/bbqrent.html", {'bbqs': bbqs})
-
-
-def bbq_rent_name(request):
-    bbqs = Barbeque.objects.all().order_by(Lower('name'))
-    return render(request, "bbq/bbqrent.html", {'bbqs': bbqs})
+    return render(request, "bbq/bbqrent.html", context)
 
 
 def view_bbq(request, barbeque_id):
