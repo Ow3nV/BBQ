@@ -23,9 +23,9 @@
         justify-content: space-between;
         padding: 10px;
         width: 100%;
-        max-width: 400px;/* Each card will have the same width */
+        max-width: 400px; /* Each card will have the same width */
         margin: 0 auto; /* Centers the card horizontally */
-        max-width:400px;
+        max-width: 400px;
     }
 
     .card img {
@@ -36,18 +36,22 @@
     .card-title,
     .card-text {
         text-align: center;
-        margin-bottom:10px;
+        margin-bottom: 10px;
     }
 
     .card-buttons {
         display: flex;
         justify-content: space-between;
-        margin-top:30px;
+        margin-top: 30px;
     }
 
     .sidebar {
         background-color: #f8f9fa;
         padding: 20px;
+        position: sticky;
+        top: 60px; /* Adjust the top position based on your navbar height */
+        height: calc(100vh - 60px); /* Adjust the height to fit the remaining viewport */
+        overflow-y: auto;
     }
 
     .filter-section h5 {
@@ -57,17 +61,12 @@
     .sidebar button[type="submit"] {
         margin-top: 20px;
     }
-
-    /* Added style for active filter */
-    .active-filter {
-        font-weight: bold;
-    }
 </style>
 
-<div class="container">
+<div class="container-fluid">
     <div class="row">
-        <div class="col-lg-3">
-            <div class="sidebar">
+        <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar">
+            <div class="position-sticky">
                 <h4>Filter</h4>
                 <form action="{% url 'rent_a_bbq' %}" method="GET">
                     <div class="filter-section">
@@ -100,14 +99,18 @@
                             <input class="form-control" type="number" name="price_max" id="priceMax" step="any" value="{{ filter_price_max }}">
                         </div>
                     </div>
-                    <button type="submit" class="btn btn-primary">Apply Filter</button>
+                    <div class="d-flex justify-content-between">
+                        <button type="submit" class="btn btn-primary">Apply Filter</button>
+                        <a href="{% url 'rent_a_bbq' %}" class="btn btn-secondary">Clear Filters</a>
+                    </div>
                 </form>
             </div>
-        </div>
-        <div class="col-lg-9">
+        </nav>
+
+        <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
             <div class="dropdown-center">
                 <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" style="float:right; margin:10px">
-                    Sort By
+                    Sort By: {% if sort_option == 'high' %}Price: High-Low{% elif sort_option == 'low' %}Price: Low-High{% elif sort_option == 'name' %}Name: A-Z{% else %}Default{% endif %}
                 </button>
                 <ul class="dropdown-menu">
                     <li><a class="dropdown-item" href="{% url 'rent_a_bbq' %}">Default</a></li>
@@ -132,7 +135,7 @@
                 </div>
                 {% endfor %}
             </div>
-        </div>
+        </main>
     </div>
 </div>
 {% endblock %}
