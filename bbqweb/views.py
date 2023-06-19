@@ -25,12 +25,12 @@ def bbq_rent(request):
 
 
 def bbq_rent_day(request):
-    bbqs = Barbeque.objects.all().order_by('rent_day')
+    bbqs = Barbeque.objects.all().order_by('rent')
     return render(request, "bbq/bbqrent.html", {'bbqs': bbqs})
 
 
 def bbq_rent_day_high(request):
-    bbqs = Barbeque.objects.all().order_by('-rent_day')
+    bbqs = Barbeque.objects.all().order_by('-rent')
     return render(request, "bbq/bbqrent.html", {'bbqs': bbqs})
 
 
