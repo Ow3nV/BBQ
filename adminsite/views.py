@@ -3,6 +3,7 @@ from django.shortcuts import render, redirect
 
 from bbqweb.forms import BarbequeForm, ImageForm
 from bbqweb.models import Barbeque, Images
+from order.models import Order
 
 
 # Create your views here.
@@ -94,3 +95,11 @@ def delete_bbq(request, barbeque_id):
     else:
         messages.warning(request, "No Access")
         return redirect('home')
+
+
+def view_orders(request):
+    if request.user.is_superuser:
+        orders = Order.objects.all().order_by('date_from')
+        return render(request, "admin/allorders.html", {"orders": orders})
+    messages.warning(request, "No Access")
+    return redirect('home')
