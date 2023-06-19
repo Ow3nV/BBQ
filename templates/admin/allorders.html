@@ -1,0 +1,47 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block title %} Admin - View All Orders {% endblock %}
+{% block template %}
+    <style>
+        #nav_color{
+          background-color: #EE4B2B
+        }
+    </style>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/dataTables.bootstrap4.min.css">
+    <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.22/js/dataTables.bootstrap4.min.js"></script>
+    <body>
+    <div class="container" style="width:40%";>
+    <h2> Bootstrap Sort Table </h2>
+    <table class="table table-striped table-bordered" id="sortTable">
+    <thead>
+        <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Total</th>
+            <th scope="col">Start Date</th>
+            <th scope="col">End Date</th>
+            <th scope="col">Barbeque</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for order in orders %}
+            <tr>
+                <td>{{ order.id }}</td>
+                <td>£{{ order.sub_total }}</td>
+                <td>{{ order.date_from|date:"D d-M-y" }}</td>
+                <td>{{ order.date_to|date:"D d-M-y" }}</td>
+                <td><a href="{% url 'view_bbq_rent' order.barbeque.id %}">BBQ Page</a></td>
+            </tr>
+        {% endfor %}
+    </tbody>
+    </table>
+    </div>
+    <script>
+    $('#sortTable').DataTable();
+    </script>
+
+{% endblock %}

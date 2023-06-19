@@ -10,8 +10,9 @@
 </style>
     <h4>Username: {{ user.username }}
     <br>Email: {{ user.email }}
-    <br><a href="bbq_form">Add a BBQ</a>
-    <br><a href="admin_view">View all BBQs</a>
+    <br><a href="{% url 'admin_bbq_form' %}">Add a BBQ</a>
+    <br><a href="{% url 'admin_view_all_bbqs' %}">View all BBQs</a>
+    <br><a href="{% url 'admin_all_orders' %}">View all Orders</a>
     </h4>
 
 {% endblock %}
