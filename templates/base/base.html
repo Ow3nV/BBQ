@@ -15,42 +15,42 @@
       </button>
 
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul style="position:absolute;top:0;right:50px;margin:10px;" class="navbar-nav">
+            <li class="nav-item dropdown">
+              <a class="btn btn dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <img src="/media/images/profilePlaceholder.png" alt="placeholder" width="30"height="30">
+              </a>
+              <ul  class="dropdown-menu dropdown-menu-end">
+                  {% if user.is_superuser%}
+                      <li><a class="dropdown-item" href={% url 'admin' %}>Admin</a></li>
+                      <li><a class="dropdown-item" href={% url 'profile' %}>Profile</a></li>
+                      <li><a class="dropdown-item" href={% url 'view_order' %}>View orders</a></li>
+                      <li><hr class="dropdown-divider"></li>
+                      <li><a class="dropdown-item" href={% url 'logout' %}>Log out</a></li>
+                  {% elif user.is_authenticated %}
+                    <li><a class="dropdown-item" href={% url 'profile' %}>Profile</a></li>
+                    <li><a class="dropdown-item" href={% url 'view_order' %}>View orders</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item" href={% url 'logout' %}>Log out</a></li>
+                  {% else %}
+                    <li><a class="dropdown-item" href={% url 'register' %}>Register</a></li>
+                    <li><a class="dropdown-item" href={% url 'login' %}>Log in</a></li>
+                  {% endif %}
+              </ul>
+            </li>
+          </ul>
+
         <ul class="navbar-nav mr-auto">
+
           <li class="nav-item">
             <a class="nav-link" href={% url 'rent_a_bbq'%}>Rent a BBQ</a>
           </li>
-            {% if user.is_superuser %}
-              <li class="nav-item">
-                <a class="nav-link" href={% url 'admin' %}>Admin</a>
-              </li>
-            {% endif %}
-            {% if user.is_authenticated %}
-
-          <li class="nav-item">
-            <a class="nav-link" href={% url 'profile' %}>Profile</a>
-          </li>
-                <li class="nav-item">
-            <a class="nav-link" href={% url 'logout' %}>Logout</a>
-          </li>
-            <li class="nav-item">
-            <div class="user-dropdown" style="position:absolute;top:0;right:0;margin:10px;">
-              <button class="user-button"><span class="user-icon"></span></button>
-              <div class="dropdown-content" id="dropdown-content">
-                <a href={% url 'profile' %}>View profile</a>
-                <a href={% url 'view_order' %}>View Orders</a>
-                <a href={% url 'logout' %}>Log out</a>
-              </div>
+            <div style="width:400px;">
+                <form class="d-flex" role="search">
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success" type="submit">Search</button>
+                </form>
             </div>
-            </li>
-            {% else %}
-                <li class="nav-item">
-            <a class="nav-link" href={% url 'login' %}>Login</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href={% url 'register' %}>Register</a>
-          </li>
-
-        {% endif %}
         </ul>
       </div>
     </nav>
