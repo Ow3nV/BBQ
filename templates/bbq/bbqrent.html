@@ -3,28 +3,68 @@
     BBQ Rental - Rent
 {% endblock %}
 {% block template %}
-    <div class="row gy-1">
+<style>
+    .card-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 20px;
+    }
+
+    .card_style {
+        background-color: #00ffff;
+    }
+
+    .card {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        padding: 10px;
+    }
+
+    .card img {
+        max-width: 100%;
+        height: auto;
+    }
+
+    .card-title,
+    .card-text {
+        text-align: center;
+    }
+
+    .card-buttons {
+        display: flex;
+        justify-content: space-between;
+    }
+</style>
+<div style="justify-content:center" class="row gy-1">
     <div class="dropdown-center">
-      <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" style="float:right; margin:10px">
-        Sort By
-      </button>
-      <ul class="dropdown-menu">
-        <li><a class="dropdown-item" href="{% url 'rent_a_bbq' %}">Default</a></li>
-        <li><a class="dropdown-item" href="{% url 'rent_a_bbq_high' %}">Price: High-Low</a></li>
-        <li><a class="dropdown-item" href="{% url 'rent_a_bbq_low' %}">Price: Low-High</a></li>
-          <li><a class="dropdown-item" href="{% url 'rent_a_bbq_name' %}">Name: A-Z</a></li>
-      </ul>
+        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" style="float:right; margin:10px">
+            Sort By
+        </button>
+        <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="{% url 'rent_a_bbq' %}">Default</a></li>
+            <li><a class="dropdown-item" href="{% url 'rent_a_bbq_high' %}">Price: High-Low</a></li>
+            <li><a class="dropdown-item" href="{% url 'rent_a_bbq_low' %}">Price: Low-High</a></li>
+            <li><a class="dropdown-item" href="{% url 'rent_a_bbq_name' %}">Name: A-Z</a></li>
+        </ul>
     </div>
-        {% for x in bbqs %}
-        <div class="col-md-2">
-            <div class="card_style card" style="background-color: #0000ff">
-                <a href="{% url 'view_bbq_rent' x.id %}">
-                <img src="{{ x.image.url }}" class="figure-img img-fluid rounded img_centre_card" alt='{{ x.id }}'>
-                <h5 class="'card-title text-center">{{ x.name }}</h5>
+
+    <div class="container">
+        <div class="card-grid">
+            {% for x in bbqs %}
+            <div class="card">
+                <a style="text-decoration: none;" href="{% url 'view_bbq_rent' x.id %}">
+                    <img src="{{ x.image.url }}" class="figure-img img-fluid rounded img_centre_card" alt="{{ x.id }}">
+                    <h5 class="card-title">{{ x.name }}</h5>
                 </a>
-                <h6 class="'card-text text-center">{{ x.rent }} per day</h6>
+                <h6 class="card-text">{{ x.rent }} per day</h6>
+                <div class="card-buttons">
+                    <a href="{% url 'view_bbq_rent' x.id %}" style="width:50%" class="btn btn-success btn-custom">View details</a>
+                    <a href="#" class="btn btn-outline-primary btn-custom-sm"><img src="/static/images/cart.png" alt="placeholder" width="30" height="30"></a>
+                </div>
             </div>
+            {% endfor %}
         </div>
-    {% endfor %}
     </div>
+</div>
 {% endblock %}
