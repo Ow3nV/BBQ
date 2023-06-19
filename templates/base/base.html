@@ -3,6 +3,7 @@
 <!doctype html>
 <html lang="en">
 <script src="{% static 'brain.js' %}"></script>
+<script src="{% static 'user_dropdown.js' %}"></script>
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -24,12 +25,23 @@
               </li>
             {% endif %}
             {% if user.is_authenticated %}
+
           <li class="nav-item">
             <a class="nav-link" href={% url 'profile' %}>Profile</a>
           </li>
                 <li class="nav-item">
             <a class="nav-link" href={% url 'logout' %}>Logout</a>
           </li>
+            <li class="nav-item">
+            <div class="user-dropdown" style="position:absolute;top:0;right:0;margin:10px;">
+              <button class="user-button"><span class="user-icon"></span></button>
+              <div class="dropdown-content" id="dropdown-content">
+                <a href={% url 'profile' %}>View profile</a>
+                <a href={% url 'view_order' %}>View Orders</a>
+                <a href={% url 'logout' %}>Log out</a>
+              </div>
+            </div>
+            </li>
             {% else %}
                 <li class="nav-item">
             <a class="nav-link" href={% url 'login' %}>Login</a>
@@ -37,6 +49,7 @@
           <li class="nav-item">
             <a class="nav-link" href={% url 'register' %}>Register</a>
           </li>
+
         {% endif %}
         </ul>
       </div>
