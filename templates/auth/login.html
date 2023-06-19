@@ -1,18 +1,11 @@
 {% extends "base/base.html" %}
+{% load socialaccount %}
 {% block title %}
     BBQ Rental - Login
 {% endblock %}
 {% block template %}
 
 {% load crispy_forms_filters %}
-<script src="https://apis.google.com/js/platform.js" async defer></script>
-<meta name="google-signin-client_id" content="31012784979 0-j8k1ukb53jl79k17o25u3l29fbslggao.apps.googleusercontent.com">
-
-
-
-<div id="fb-root"></div>
-<script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v17.0&appId=800810594870927&autoLogAppEvents=1" nonce="A55wfbZP"></script>
-<!--Register-->
 <div class="container py-5">
 	<h1>Login</h1>
 
@@ -23,19 +16,12 @@
 		<button class="btn btn-primary" type="submit">Login</button>
 	</form>
 </div>
-
-<script>
-	function onSignIn(googleUser) {
-	  var profile = googleUser.getBasicProfile();
-	  console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
-	  console.log('Name: ' + profile.getName());
-	  console.log('Image URL: ' + profile.getImageUrl());
-	  console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
-}
-</script>
-<div style="margin-top:-50px" class="container py-5">
-<div class="g-signin2" data-onsuccess="onSignIn"></div>
-</div>
+<h1>My Google OAuth Project </h1>
+{% if user.is_authenticated %}
+  <p>Welcome, You are logged in as {{ user.username }}</p>
+{% else %}
+  <a href="https://accounts.google.com/o/oauth2/v2/auth/oauthchooseaccount?client_id=310127849790-j8k1ukb53jl79k17o25u3l29fbslggao.apps.googleusercontent.com&redirect_uri=http%3A%2F%2F127.0.0.1%3A8000%2Faccounts%2Fgoogle%2Flogin%2Fcallback%2F&scope=email%20profile&response_type=code&state=3cOg6tayHjEm&access_type=online&service=lso&o2v=2&flowName=GeneralOAuthFlow">Login With Google</a>
+{% endif %}
 
 
 {% endblock %}
