@@ -1,5 +1,5 @@
 #gaytest{
-    background-color: #ffffff;
+    background-color: #696969;
     overflow-x: hidden;
 }
 .carousel-item {
@@ -29,6 +29,26 @@
 }
 
 .support-icon {
+  font-size: 30px;
+  color: white;
+}
+
+.cart-bubble {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 60px;
+  height: 60px;
+  background-color: lightblue;
+  border-radius: 50%;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  z-index: 9999;
+}
+
+.cart-icon {
   font-size: 30px;
   color: white;
 }

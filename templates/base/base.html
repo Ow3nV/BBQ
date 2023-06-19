@@ -3,9 +3,21 @@
 <!doctype html>
 <html lang="en">
 <script src="{% static 'brain.js' %}"></script>
+<style>
+        .cycle-text {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 14px;
+      text-align: center;
+      cursor: pointer;
+    }
 
+</style>
 
   <head>
+
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="{% static 'style.css' %}">
@@ -73,13 +85,40 @@
   </symbol>
 </svg>
   <body id="gaytest">
-    <div class="support-bubble">
-        <span class="support-icon">?</span>
-        <div class="popup" style="display:none">
-    <p>Test</p>
+
+   <button class="cart-bubble btn-circle btn-info" data-bs-toggle="modal" data-bs-target="#cartModal">
+  <img src="/static/images/cart.png" alt="placeholder" width="40" height="40">
+</button>
+
+    <div class="modal fade" id="cartModal" tabindex="-1" aria-labelledby="cartModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="cartModalLabel">Cart</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <p>Cart content goes here...</p>
+              </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary">Checkout</button>
+          </div>
         </div>
+      </div>
     </div>
 
+<div class="cycle-text" id="textCycle">Crazy?</div>
+  <script>
+    var textCycle = document.getElementById('textCycle');
+    var words = ['Crazy?', 'i was crazy once', 'they locked me in a room', 'a rubber room', 'a rubber room filled with rats', 'the rats made me crazy']; // Add more words if needed
+    var index = 0;
+
+    textCycle.addEventListener('click', function() {
+      index = (index + 1) % words.length;
+      textCycle.textContent = words[index];
+    });
+  </script>
 
     {% if messages %}
         {% for message in messages %}

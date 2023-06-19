@@ -1,9 +1,6 @@
-document.addEventListener('DOMContentLoaded', function() {
-  // Add an event listener to the support bubble
-    document.querySelector('.support-bubble').addEventListener('click', function() {
-  // Toggle the visibility of the popup
-        var popup = document.querySelector('.popup');
-        popup.style.display = popup.style.display === 'none' ? 'block' : 'none';
-    });
-
-});
+//document.addEventListener('DOMContentLoaded', function() {
+//  document.querySelector('.cart-bubble').addEventListener('click', function() {
+//    var popup = document.querySelector('.popup');
+//    popup.style.display = popup.style.display === 'block' ? 'none' : 'block';
+//  });
+//});

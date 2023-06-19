@@ -14,7 +14,7 @@
     }
 
     .card_style {
-        background-color: #00ffff;
+        background-color: #808080;
     }
 
     .card {
@@ -63,7 +63,7 @@
     <div class="container">
         <div class="card-grid">
             {% for x in bbqs %}
-            <div class="card">
+            <div class="card" style="background-color:#BEBEBE">
                 <a style="text-decoration: none;" href="{% url 'view_bbq_rent' x.id %}">
                     <img src="{{ x.image.url }}" class="figure-img img-fluid rounded img_centre_card" alt="{{ x.id }}">
                     <h5 class="card-title">{{ x.name }}</h5>
@@ -78,4 +78,5 @@
         </div>
     </div>
 </div>
+
 {% endblock %}
