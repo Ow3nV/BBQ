@@ -1,5 +1,4 @@
 {% extends "base/base.html" %}
-{% load socialaccount %}
 {% block title %}
     BBQ Rental - Login
 {% endblock %}
@@ -16,12 +15,6 @@
 		<button class="btn btn-primary" type="submit">Login</button>
 	</form>
 </div>
-<h1>My Google OAuth Project </h1>
-{% if user.is_authenticated %}
-  <p>Welcome, You are logged in as {{ user.username }}</p>
-{% else %}
-  <a href="https://accounts.google.com/o/oauth2/v2/auth/oauthchooseaccount?client_id=310127849790-j8k1ukb53jl79k17o25u3l29fbslggao.apps.googleusercontent.com&redirect_uri=http%3A%2F%2F127.0.0.1%3A8000%2Faccounts%2Fgoogle%2Flogin%2Fcallback%2F&scope=email%20profile&response_type=code&state=3cOg6tayHjEm&access_type=online&service=lso&o2v=2&flowName=GeneralOAuthFlow">Login With Google</a>
-{% endif %}
 
 
 {% endblock %}
