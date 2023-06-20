@@ -69,22 +69,14 @@ def checkout_calender(request, barbeque_id):
             if form.is_valid():
                 selected_date_range = request.POST['date_range']
                 selected_date_range = selected_date_range.split(" to ")
-
-                selected_date_range = pandas.date_range(selected_date_range[0], selected_date_range[1], freq="d").strftime(
-                    "%Y-%m-%d")
-                selected_date_range = list(dict.fromkeys(selected_date_range))
-                if any(selected_date in selected_date_range for selected_date in all_dates):
-                    messages.error(request, "Selected date is unavailable.")
-                    return render(request, "bbq/calenderform.html", {'form': form})
-                else:
-                    messages.success(request, "Order Successful")
-                    request.session['date_from'] = selected_date_range[0]
-                    request.session['date_to'] = selected_date_range[-1]
-                    request.session['delivery'] = form.cleaned_data['delivery']
-                    request.session['pickup'] = form.cleaned_data['pickup']
-                    return redirect("checkout_bbq", barbeque_id)
+                messages.success(request, "Booking Available")
+                request.session['date_from'] = selected_date_range[0]
+                request.session['date_to'] = selected_date_range[-1]
+                request.session['delivery'] = form.cleaned_data['delivery']
+                request.session['pickup'] = form.cleaned_data['pickup']
+                return redirect("checkout_bbq", barbeque_id)
             messages.error(request, "Unsuccessful Invalid information.")
-        return render(request, "bbq/calenderform.html", {'form': form})
+        return render(request, "bbq/calenderform.html", {'form': form, 'unavailable_dates': all_dates})
     else:
         messages.warning(request, 'Please Log In')
         return redirect('view_bbq_rent', barbeque_id)

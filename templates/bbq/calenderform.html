@@ -16,7 +16,7 @@ Select Dates
         {% csrf_token %}
         <div class="form-group">
             <label>Dates</label><br>
-            <input type="text" class="flatpickr" id="date-range" name="date_range" style="width:100%">
+            <input type="text" class="flatpickr" id="date-range" name="date_range" style="width:100%; margin:auto;">
             {{ form.delivery|as_crispy_field }}
             {{ form.pickup|as_crispy_field }}
         </div>
@@ -39,7 +39,9 @@ Select Dates
     flatpickr('#date-range', {
         mode: 'range',
         dateFormat: 'Y-m-d',
-        // Add any additional options or customization here
+        disable: {{ unavailable_dates|safe }},
+        minDate: "today",
+        inline: true,
     });
 </script>
 {% endblock %}
