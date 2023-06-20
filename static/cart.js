@@ -1,6 +1,11 @@
 document.addEventListener('DOMContentLoaded', function() {
   var cartItems = [];
 
+  // Load cart items from session storage if available
+  if (sessionStorage.getItem('cartItems')) {
+    cartItems = JSON.parse(sessionStorage.getItem('cartItems'));
+  }
+
   function addToCart(itemId) {
     var item = {
       id: itemId,
@@ -8,7 +13,13 @@ document.addEventListener('DOMContentLoaded', function() {
     };
 
     cartItems.push(item);
+    saveCartItems();
     refreshCartItems();
+  }
+
+  function saveCartItems() {
+    // Save cart items to session storage
+    sessionStorage.setItem('cartItems', JSON.stringify(cartItems));
   }
 
   function refreshCartItems() {
@@ -29,4 +40,7 @@ document.addEventListener('DOMContentLoaded', function() {
       addToCart(itemId);
     });
   });
+
+  // Initialize cart items on page load
+  refreshCartItems();
 });
