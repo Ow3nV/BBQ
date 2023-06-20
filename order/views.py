@@ -6,7 +6,7 @@ from django.shortcuts import render, redirect
 from django.utils.dateparse import parse_date
 
 from bbqweb.models import Barbeque
-from order.forms import OrderForm, CalenderForm, DateInput
+from order.forms import OrderForm, CalenderForm
 from order.models import Order
 import pandas
 
@@ -18,7 +18,7 @@ def checkout_bbq(request, barbeque_id):
         form = OrderForm()
         date_from = parse_date(request.session['date_from'])
         date_to = parse_date(request.session['date_to'])
-        delivery= request.session['delivery']
+        delivery = request.session['delivery']
         pick_up = request.session['pickup']
         bbq = Barbeque.objects.get(id=barbeque_id)
         days = date_to - date_from
@@ -49,7 +49,7 @@ def checkout_bbq(request, barbeque_id):
                 messages.success(request, "Order Successful")
                 return redirect("home")
             messages.error(request, "Unsuccessful Invalid information.")
-        return render(request, 'bbq/bbqcheckout.html', {'order_form' : form, 'price': price})
+        return render(request, 'bbq/bbqcheckout.html', {'order_form': form, 'price': price})
     else:
         messages.warning(request, 'Please Log In')
         return redirect('view_bbq_rent', barbeque_id)
@@ -64,27 +64,24 @@ def checkout_calender(request, barbeque_id):
             date_range = pandas.date_range(dates.date_from, dates.date_to, freq="d")
             all_dates.extend(date_range.strftime("%Y-%m-%d"))
         all_dates = list(dict.fromkeys(all_dates))
-        form = CalenderForm()
+        form = CalenderForm(request.POST or None)
         if request.method == "POST":
-            form = CalenderForm(request.POST)
             if form.is_valid():
-                selected_date_from = form.cleaned_data['date_from']
-                selected_date_to = form.cleaned_data['date_to']
-                selected_date_range = pandas.date_range(selected_date_from, selected_date_to, freq="d").strftime("%Y-%m-%d")
-                print("gay")
-                print(all_dates)
+                selected_date_range = request.POST['date_range']
+                selected_date_range = selected_date_range.split(" to ")
+
+                selected_date_range = pandas.date_range(selected_date_range[0], selected_date_range[1], freq="d").strftime(
+                    "%Y-%m-%d")
                 selected_date_range = list(dict.fromkeys(selected_date_range))
-                print(selected_date_range)
                 if any(selected_date in selected_date_range for selected_date in all_dates):
-                    print("super duper gay")
                     messages.error(request, "Selected date is unavailable.")
                     return render(request, "bbq/calenderform.html", {'form': form})
                 else:
                     messages.success(request, "Order Successful")
-                    request.session['date_from'] = form.data['date_from']
-                    request.session['date_to'] = form.data['date_to']
-                    request.session['delivery'] = form.data['delivery']
-                    request.session['pickup'] = form.data['pickup']
+                    request.session['date_from'] = selected_date_range[0]
+                    request.session['date_to'] = selected_date_range[-1]
+                    request.session['delivery'] = form.cleaned_data['delivery']
+                    request.session['pickup'] = form.cleaned_data['pickup']
                     return redirect("checkout_bbq", barbeque_id)
             messages.error(request, "Unsuccessful Invalid information.")
         return render(request, "bbq/calenderform.html", {'form': form})

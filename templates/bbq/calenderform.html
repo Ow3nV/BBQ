@@ -1,26 +1,45 @@
 {% extends "base/base.html" %}
 {% load static %}
+{% load crispy_forms_filters %}
 {% block title %}
 Select Dates
 {% endblock %}
 {% block template %}
 
-{% load crispy_forms_filters %}
-<!--Register-->
+<!-- Include the flatpickr CSS -->
+<link rel="stylesheet" type="text/css" href="https://npmcdn.com/flatpickr/dist/themes/dark.css">
+
+<!-- Register -->
 <div class="container py-5">
-	<h1>Select Dates</h1>
-	<form action="" method="post" enctype="multipart/form-data">
-		{% csrf_token %}
-		{{ form|crispy }}
-		<button class="btn btn-primary" type="submit">Order</button>
-	</form>
+    <h1>Select Dates</h1>
+    <form action="" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="form-group">
+            <label>Dates</label><br>
+            <input type="text" class="flatpickr" id="date-range" name="date_range" style="width:100%">
+            {{ form.delivery|as_crispy_field }}
+            {{ form.pickup|as_crispy_field }}
+        </div>
+        <button class="btn btn-primary" type="submit">Order</button>
+    </form>
     {% if form.errors %}
         {% for field in form %}
-        {% for error in field.errors %}
-            <p> {{ errors }} </p>
-        {% endfor %}
+            {% for error in field.errors %}
+                <p>{{ error }}</p>
+            {% endfor %}
         {% endfor %}
     {% endif %}
 </div>
 
+<!-- Include the flatpickr JS -->
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+<!-- Initialize the flatpickr -->
+<script>
+    flatpickr('#date-range', {
+        mode: 'range',
+        dateFormat: 'Y-m-d',
+        // Add any additional options or customization here
+    });
+</script>
 {% endblock %}
