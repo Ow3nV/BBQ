@@ -57,58 +57,62 @@
     .filter-section h5 {
         margin-bottom: 10px;
     }
-
-    .sidebar button[type="submit"] {
-        margin-top: 20px;
+    #sidebar-nav {
+        width: 230px;
     }
+    .border-end{
+        border-color: black;
+    }
+
+
 </style>
 
 <div class="container-fluid">
-    <div class="row">
-        <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar">
-            <div class="position-sticky">
-                <h4>Filter</h4>
-                <form action="{% url 'rent_a_bbq' %}" method="GET">
-                    <div class="filter-section">
-                        <h5>Gas</h5>
-                        <div class="form-group">
-                            <select class="form-control" name="gas" id="filterGas">
-                                <option value="">Both</option>
-                                <option value="Butane"{% if filter_gas == 'Butane' %} selected{% endif %}>Butane</option>
-                                <option value="Propane"{% if filter_gas == 'Propane' %} selected{% endif %}>Propane</option>
-                                <option value="Neither"{% if filter_gas == 'Neither' %} selected{% endif %}>Neither</option>
-                            </select>
+    <div class="row flex-nowrap">
+        <div class="col-auto px-0">
+            <div id="sidebar" class="collapse collapse-horizontal show">
+                <div id="sidebar-nav" class="list-group border-0 rounded-0 text-sm-start min-vh-100">
+                    <form action="{% url 'rent_a_bbq' %}" method="GET">
+                        <div class="filter-section">
+                            <h5>Gas</h5>
+                            <div class="form-group">
+                                <select class="form-control" name="gas" id="filterGas">
+                                    <option value="">Both</option>
+                                    <option value="Butane"{% if filter_gas == 'Butane' %} selected{% endif %}>Butane</option>
+                                    <option value="Propane"{% if filter_gas == 'Propane' %} selected{% endif %}>Propane</option>
+                                    <option value="Neither"{% if filter_gas == 'Neither' %} selected{% endif %}>Neither</option>
+                                </select>
+                            </div>
                         </div>
-                    </div>
-                    <div class="filter-section">
-                        <h5>Burners</h5>
-                        <div class="form-group">
-                            <label for="burnerRange">Number of Burners:</label>
-                            <input class="form-control" type="number" name="burners" id="burnerRange" min="0" max="6" value="{{ filter_burners }}">
+                        <div class="filter-section">
+                            <h5>Burners</h5>
+                            <div class="form-group">
+                                <label for="burnerRange">Number of Burners:</label>
+                                <input class="form-control" type="number" name="burners" id="burnerRange" min="0" max="6" value="{{ filter_burners }}">
+                            </div>
                         </div>
-                    </div>
-                    <div class="filter-section">
-                        <h5>Price Range</h5>
-                        <div class="form-group">
-                            <label for="priceMin">Minimum Price:</label>
-                            <input class="form-control" type="number" name="price_min" id="priceMin" step="any" value="{{ filter_price_min }}">
+                        <div class="filter-section">
+                            <h5>Price Range</h5>
+                            <div class="form-group">
+                                <label for="priceMin">Minimum Price:</label>
+                                <input class="form-control" type="number" name="price_min" id="priceMin" step="any" value="{{ filter_price_min }}">
+                            </div>
+                            <div class="form-group">
+                                <label for="priceMax">Maximum Price:</label>
+                                <input class="form-control" type="number" name="price_max" id="priceMax" step="any" value="{{ filter_price_max }}">
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label for="priceMax">Maximum Price:</label>
-                            <input class="form-control" type="number" name="price_max" id="priceMax" step="any" value="{{ filter_price_max }}">
+                        <div class="d-flex justify-content-between">
+                            <button type="submit" class="btn btn-primary">Apply Filter</button>
+                            <a href="{% url 'rent_a_bbq' %}" class="btn btn-secondary">Clear Filters</a>
                         </div>
-                    </div>
-                    <div class="d-flex justify-content-between">
-                        <button type="submit" class="btn btn-primary">Apply Filter</button>
-                        <a href="{% url 'rent_a_bbq' %}" class="btn btn-secondary">Clear Filters</a>
-                    </div>
-                </form>
+                    </form>
+                </div>
             </div>
-        </nav>
-
-        <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-            <div class="dropdown-center">
-                <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" style="float:right; margin:10px">
+        </div>
+        <main class="col ps-md-2 pt-2">
+            <div class="dropdown-center" style="margin-bottom: 10px">
+                <button class="btn btn-info dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" style="float:right;">
                     Sort By: {% if sort_option == 'high' %}Price: High-Low{% elif sort_option == 'low' %}Price: Low-High{% elif sort_option == 'name' %}Name: A-Z{% else %}Default{% endif %}
                 </button>
                 <ul class="dropdown-menu">
@@ -117,28 +121,33 @@
                     <li><a class="dropdown-item" href="{% url 'rent_a_bbq' %}?sort=low">Price: Low-High</a></li>
                     <li><a class="dropdown-item" href="{% url 'rent_a_bbq' %}?sort=name">Name: A-Z</a></li>
                 </ul>
+                <button class="btn btn-info" data-bs-target="#sidebar" data-bs-toggle="collapse">Filters</button>
             </div>
-
-            <div class="card-grid">
-                {% for x in bbqs %}
-                <div class="card">
-                    <a style="text-decoration: none;" href="{% url 'view_bbq_rent' x.id %}">
-                        <img src="{{ x.image.url }}" class="figure-img img-fluid rounded img_centre_card" alt="{{ x.id }}">
-                        <h5 class="card-title">{{ x.name }}</h5>
-                    </a>
-                    <h6 class="card-text">{{ x.rent }} per day</h6>
-                    <div class="card-buttons">
-                        <a href="{% url 'view_bbq_rent' x.id %}" style="width:50%" class="btn btn-success btn-custom">View details</a>
-                        <a href="#" onclick="addToCart('{{ x.id }}', '{{ x.name }}')" class="btn btn-outline-primary btn-custom-sm">
-                            <img src="/static/images/cart.png" alt="placeholder" width="30" height="30">
-                        </a>
+            <div class="row">
+                <div class="col-12">
+                    <div class="card-grid">
+                        {% for x in bbqs %}
+                        <div class="card">
+                            <a class="link-success" style="text-decoration: none;" href="{% url 'view_bbq_rent' x.id %}">
+                                <img src="{{ x.image.url }}" class="figure-img img-fluid rounded img_centre_card" alt="{{ x.id }}">
+                                <h5 class="card-title">{{ x.name }}</h5>
+                            </a>
+                            <h6 class="card-text">{{ x.rent }} per day</h6>
+                            <div class="card-buttons">
+                                <a href="{% url 'view_bbq_rent' x.id %}" style="width:50%" class="btn btn-success btn-custom">View details</a>
+                                <a href="#" onclick="addToCart('{{ x.id }}', '{{ x.name }}')" class="btn btn-outline-primary btn-custom-sm">
+                                    <img src="/static/images/cart.png" alt="placeholder" width="30" height="30">
+                                </a>
+                            </div>
+                        </div>
+                        {% endfor %}
                     </div>
                 </div>
-                {% endfor %}
             </div>
         </main>
     </div>
 </div>
+
 <script>
     function addToCart(barbequeId, barbequeName) {
         fetch('/add_to_cart/' + barbequeId)
