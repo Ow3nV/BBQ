@@ -95,3 +95,9 @@ def add_to_cart(request, barbeque_id):
     # Redirect the user to the desired page after adding to the cart
 
     return HttpResponse()
+
+
+def remove_from_cart(request, barbeque_id):
+    del request.session['cart'][barbeque_id]
+    request.session.modified = True
+    return HttpResponse()
