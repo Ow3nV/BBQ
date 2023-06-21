@@ -1,4 +1,5 @@
 {% extends 'base/base.html' %}
+{% load static %}
 {% block title %}
     BBQ Rental - Rent
 {% endblock %}
@@ -60,26 +61,36 @@
     #sidebar-nav {
         width: 230px;
     }
-    .border-end{
-        border-color: black;
-    }
     .cart-notification {
-      position: absolute;
-      top: 0;
-      right: 0;
-      transform: translateY(-100%);
-      opacity: 0;
-      background-color: #696969;
-      padding: 10px;
-      border-radius: 5px;
-      animation: cartAnimation 1s forwards;
-      pointer-events: none;
+        position: absolute;
+        top: 0;
+        right: 0;
+        transform: translateY(-100%);
+        opacity: 0;
+        background-color: #ffffff;
+        padding: 10px;
+        border-radius: 5px;
+        animation: cartAnimation 1s forwards;
+        pointer-events: none;
     }
 
     .cart-notification a {
-      text-decoration: none;
-      pointer-events: none;
-      color: #000;
+        text-decoration: none;
+        pointer-events: none;
+        color: #000000;
+    }
+
+    @keyframes cartAnimation {
+        0% {
+            color:#000000;
+            opacity: 1;
+            transform: translateY(-100%);
+        }
+        100% {
+            color:#000000;
+            opacity: 1;
+            transform: translateY(-150%);
+        }
     }
 
 </style>
@@ -88,12 +99,12 @@
     <div class="row flex-nowrap">
         <div class="col-auto px-0">
             <div id="sidebar" class="collapse collapse-horizontal show">
-                <div id="sidebar-nav" class="list-group border-0 rounded-0 text-sm-start min-vh-100">
+                <div id="sidebar-nav" class="list-group border-0 rounded-0 text-sm-start">
                     <form action="{% url 'rent_a_bbq' %}" method="GET">
                         <div class="filter-section">
                             <h5>Gas</h5>
                             <div class="form-group">
-                                <select class="form-control" name="gas" id="filterGas">
+                                <select class="form-control" name="gas" id="filterGas" style="margin-bottom: 15px;">
                                     <option value="">Both</option>
                                     <option value="Butane"{% if filter_gas == 'Butane' %} selected{% endif %}>Butane</option>
                                     <option value="Propane"{% if filter_gas == 'Propane' %} selected{% endif %}>Propane</option>
@@ -105,7 +116,7 @@
                             <h5>Burners</h5>
                             <div class="form-group">
                                 <label for="burnerRange">Number of Burners:</label>
-                                <input class="form-control" type="number" name="burners" id="burnerRange" min="0" max="6" value="{{ filter_burners }}">
+                                <input class="form-control" type="number" name="burners" id="burnerRange" min="0" max="6" value="{{ filter_burners }}" style="margin-bottom: 15px;">
                             </div>
                         </div>
                         <div class="filter-section">
@@ -116,7 +127,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="priceMax">Maximum Price:</label>
-                                <input class="form-control" type="number" name="price_max" id="priceMax" step="any" value="{{ filter_price_max }}">
+                                <input class="form-control" type="number" name="price_max" id="priceMax" step="any" value="{{ filter_price_max }}" style="margin-bottom: 15px;">
                             </div>
                         </div>
                         <div class="d-flex justify-content-between">
@@ -173,7 +184,7 @@
             // Create the notification element
             const notification = document.createElement('div');
             notification.classList.add('cart-notification');
-            notification.textContent = 'Added to cart!';
+            notification.textContent = barbequeName + ' added to cart!';
 
             // Append the notification element to the button's parent container
             const button = event.target;
@@ -195,6 +206,6 @@
 
       return false; // Prevent the default form submission behavior
     }
-
 </script>
+
 {% endblock %}
