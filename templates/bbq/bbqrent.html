@@ -61,40 +61,9 @@
     #sidebar-nav {
         width: 230px;
     }
-    .cart-notification {
-        position: absolute;
-        top: 0;
-        right: 0;
-        transform: translateY(-100%);
-        opacity: 0;
-        background-color: #ffffff;
-        padding: 10px;
-        border-radius: 5px;
-        animation: cartAnimation 1s forwards;
-        pointer-events: none;
-    }
-
-    .cart-notification a {
-        text-decoration: none;
-        pointer-events: none;
-        color: #000000;
-    }
-
-    @keyframes cartAnimation {
-        0% {
-            color:#000000;
-            opacity: 1;
-            transform: translateY(-100%);
-        }
-        100% {
-            color:#000000;
-            opacity: 1;
-            transform: translateY(-150%);
-        }
-    }
 
 </style>
-
+<div id="alertContainer"></div>
 <div class="container-fluid">
     <div class="row flex-nowrap">
         <div class="col-auto px-0">
@@ -162,10 +131,10 @@
                             </a>
                             <h6 class="card-text">{{ x.rent }} per day</h6>
                             <div class="card-buttons">
-                                <a href="{% url 'view_bbq_rent' x.id %}" style="width:50%" class="btn btn-success btn-custom">View details</a>
-                                <a href="#" onclick="addToCart(event, '{{ x.id }}', '{{ x.name }}')" class="btn btn-outline-primary btn-custom-sm">
-                                    <img src="/static/images/cart.png" alt="placeholder" width="30" height="30">
-                                </a>
+                               <a href="{% url 'view_bbq_rent' x.id %}" style="width:50%" class="btn btn-success btn-custom">View details</a>
+                               <a href="#" onclick="addToCart(event, '{{ x.id }}', '{{ x.name }}')" class="btn btn-info btn-custom-sm" id="cartButton">
+                                  <img src="/static/images/cart.png" alt="placeholder" width="30" height="30">
+                               </a>
                             </div>
                         </div>
                         {% endfor %}
@@ -178,34 +147,38 @@
 
 <script>
     function addToCart(event, barbequeId, barbequeName) {
-      fetch('/add_to_cart/' + barbequeId)
-        .then(response => {
-          if (response.ok) {
-            // Create the notification element
-            const notification = document.createElement('div');
-            notification.classList.add('cart-notification');
-            notification.textContent = barbequeName + ' added to cart!';
+       fetch('/add_to_cart/' + barbequeId)
+          .then(response => {
+             if (response.ok) {
+                // Create the alert element
+                const alertContainer = document.getElementById('alertContainer');
+                const alertDiv = document.createElement('div');
+                alertDiv.innerHTML = `
+                   <div class="alert alert-dark alert-dismissible" role="alert">
+                   <strong>${barbequeName}</strong> added to cart!
+                   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                `;
 
-            // Append the notification element to the button's parent container
-            const button = event.target;
-            button.parentNode.appendChild(notification);
+                // Append the alert element to the container
+                alertContainer.appendChild(alertDiv);
 
-            // Remove the notification element after a certain duration
-            setTimeout(() => {
-              notification.remove();
-            }, 3000);
+                // Remove the alert element after a certain duration
+                setTimeout(() => {
+                   alertDiv.remove();
+                }, 4000);
 
-            console.log('Item added to cart successfully');
-          } else {
-            console.error('Error adding item to cart');
-          }
-        })
-        .catch(error => {
-          console.error('Error:', error);
-        });
+                console.log('Item added to cart successfully');
+             } else {
+                console.error('Error adding item to cart');
+             }
+          })
+          .catch(error => {
+             console.error('Error:', error);
+          });
 
-      return false; // Prevent the default form submission behavior
+       return false; // Prevent the default form submission behavior
     }
+
 </script>
 
 {% endblock %}
