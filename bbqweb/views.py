@@ -72,3 +72,26 @@ def view_bbq(request, barbeque_id):
         image_list.append(imgs.image4.url)
 
     return render(request, "bbq/viewbbqrent.html", {'bbq': bbq, 'imgs': image_list})
+
+
+def add_to_cart(request, barbeque_id):
+    bbq = Barbeque.objects.get(id=barbeque_id)
+
+    # Retrieve the BBQ name from the query parameters
+    bbq_name = bbq.name
+
+    # Get the cart from the session or create a new one if it doesn't exist
+    cart = request.session.get('cart', {})
+
+    # Add the BBQ ID and name to the cart dictionary
+    cart[barbeque_id] = bbq_name
+
+    # Store the updated cart back in the session
+    request.session['cart'] = cart
+
+    # Output the updated cart to verify
+    print('Cart:', cart)
+
+    # Redirect the user to the desired page after adding to the cart
+    messages.success(request, "Added To Basket " + bbq_name)
+    return redirect('rent_a_bbq')

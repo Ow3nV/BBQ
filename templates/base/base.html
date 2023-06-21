@@ -99,7 +99,16 @@
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
               <div class="modal-body">
-                <ul id="cartItems"></ul>
+                {% if 'cart' in request.session %}
+                    <h2>Your Cart:</h2>
+                    <ul>
+                        {% for bbq_id, bbq_name in request.session.cart.items %}
+                            <li>{{ bbq_name }}</li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <p>Your cart is empty.</p>
+                {% endif %}
               </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
