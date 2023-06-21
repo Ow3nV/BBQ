@@ -63,7 +63,24 @@
     .border-end{
         border-color: black;
     }
+    .cart-notification {
+      position: absolute;
+      top: 0;
+      right: 0;
+      transform: translateY(-100%);
+      opacity: 0;
+      background-color: #696969;
+      padding: 10px;
+      border-radius: 5px;
+      animation: cartAnimation 1s forwards;
+      pointer-events: none;
+    }
 
+    .cart-notification a {
+      text-decoration: none;
+      pointer-events: none;
+      color: #000;
+    }
 
 </style>
 
@@ -135,7 +152,7 @@
                             <h6 class="card-text">{{ x.rent }} per day</h6>
                             <div class="card-buttons">
                                 <a href="{% url 'view_bbq_rent' x.id %}" style="width:50%" class="btn btn-success btn-custom">View details</a>
-                                <a href="#" onclick="addToCart('{{ x.id }}', '{{ x.name }}')" class="btn btn-outline-primary btn-custom-sm">
+                                <a href="#" onclick="addToCart(event, '{{ x.id }}', '{{ x.name }}')" class="btn btn-outline-primary btn-custom-sm">
                                     <img src="/static/images/cart.png" alt="placeholder" width="30" height="30">
                                 </a>
                             </div>
@@ -149,19 +166,35 @@
 </div>
 
 <script>
-    function addToCart(barbequeId, barbequeName) {
-        fetch('/add_to_cart/' + barbequeId)
-            .then(response => {
-                if (response.ok) {
-                    console.log('Item added to cart successfully');
-                    alert('Added To Basket: ' + barbequeName);
-                } else {
-                    console.error('Error adding item to cart');
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
+    function addToCart(event, barbequeId, barbequeName) {
+      fetch('/add_to_cart/' + barbequeId)
+        .then(response => {
+          if (response.ok) {
+            // Create the notification element
+            const notification = document.createElement('div');
+            notification.classList.add('cart-notification');
+            notification.textContent = 'Added to cart!';
+
+            // Append the notification element to the button's parent container
+            const button = event.target;
+            button.parentNode.appendChild(notification);
+
+            // Remove the notification element after a certain duration
+            setTimeout(() => {
+              notification.remove();
+            }, 3000);
+
+            console.log('Item added to cart successfully');
+          } else {
+            console.error('Error adding item to cart');
+          }
+        })
+        .catch(error => {
+          console.error('Error:', error);
+        });
+
+      return false; // Prevent the default form submission behavior
     }
+
 </script>
 {% endblock %}

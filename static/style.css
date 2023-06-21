@@ -153,3 +153,8 @@
 #dropdown-background {
   background-color: lightblue;
 }
+<style>
+  .modal-body ul li {
+    margin-bottom: 10px;
+  }
+</style>
