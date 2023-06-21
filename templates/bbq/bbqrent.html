@@ -129,7 +129,7 @@
                     <h6 class="card-text">{{ x.rent }} per day</h6>
                     <div class="card-buttons">
                         <a href="{% url 'view_bbq_rent' x.id %}" style="width:50%" class="btn btn-success btn-custom">View details</a>
-                        <a href="{% url 'add_to_cart' x.id %}?name={{ bbq.name }}" class="btn btn-outline-primary btn-custom-sm">
+                        <a href="#" onclick="addToCart('{{ x.id }}', '{{ x.name }}')" class="btn btn-outline-primary btn-custom-sm">
                             <img src="/static/images/cart.png" alt="placeholder" width="30" height="30">
                         </a>
                     </div>
@@ -139,4 +139,20 @@
         </main>
     </div>
 </div>
+<script>
+    function addToCart(barbequeId, barbequeName) {
+        fetch('/add_to_cart/' + barbequeId)
+            .then(response => {
+                if (response.ok) {
+                    console.log('Item added to cart successfully');
+                    alert('Added To Basket: ' + barbequeName);
+                } else {
+                    console.error('Error adding item to cart');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+    }
+</script>
 {% endblock %}

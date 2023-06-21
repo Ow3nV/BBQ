@@ -94,4 +94,4 @@ def add_to_cart(request, barbeque_id):
 
     # Redirect the user to the desired page after adding to the cart
     messages.success(request, "Added To Basket " + bbq_name)
-    return redirect('rent_a_bbq')
+    return HttpResponse()
