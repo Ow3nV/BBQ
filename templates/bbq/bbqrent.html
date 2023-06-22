@@ -63,6 +63,71 @@
     }
 
 </style>
+<script>
+
+    function addToCart(event, barbequeId, barbequeName) {
+        fetch('/add_to_cart/' + barbequeId)
+            .then(response => {
+                if (response.ok) {
+                    return response.json(); // Parse the JSON response
+                } else {
+                    throw new Error('Error adding item to cart');
+                }
+            })
+            .then(data => {
+                // Update the cart dynamically using the received data
+                const cart = data.cart;
+
+                // Construct the HTML string for cart items
+                let cartHTML = '<ul class="cart-list">';
+                for (const itemId in cart) {
+                    const itemName = cart[itemId];
+                    const itemHTML = `
+                        <li class="d-flex justify-content-between align-items-center">
+                            <span>- ${itemName}</span>
+                            <a href="#" class="delete-link" onclick="return removeFromCart(event, '${itemId}', '${itemName}')">
+                                <img src="/static/images/bin.png" alt="Delete" width="20" height="20">
+                            </a>
+                        </li>
+                    `;
+                    cartHTML += itemHTML;
+                }
+                cartHTML += '</ul>';
+
+                // Set the HTML content of the cartContainer element
+                const cartContainer = document.getElementById('cartContainer');
+                cartContainer.innerHTML = cartHTML;
+                // Create the alert element
+                const alertContainer = document.getElementById('alertContainer');
+                const alertDiv = document.createElement('div');
+                alertDiv.innerHTML = `
+                    <div class="alert alert-dark alert-dismissible" role="alert">
+                    <strong>${barbequeName}</strong> added to cart!
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                `;
+
+                // Append the alert element to the container
+                alertContainer.appendChild(alertDiv);
+
+                // Remove the alert element after a certain duration
+                setTimeout(() => {
+                    alertDiv.remove();
+                }, 4000);
+
+                console.log('Item added to cart successfully');
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+
+        return false; // Prevent the default form submission behavior
+    }
+
+
+
+
+</script>
 <div id="alertContainer"></div>
 <div class="container-fluid">
     <div class="row flex-nowrap">
@@ -145,41 +210,6 @@
     </div>
 </div>
 
-<script>
-    function addToCart(event, barbequeId, barbequeName) {
-       fetch('/add_to_cart/' + barbequeId)
-          .then(response => {
-             if (response.ok) {
-                // Create the alert element
-                const alertContainer = document.getElementById('alertContainer');
-                const alertDiv = document.createElement('div');
-                alertDiv.innerHTML = `
-                   <div class="alert alert-dark alert-dismissible" role="alert">
-                   <strong>${barbequeName}</strong> added to cart!
-                   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                   </div>
-                `;
 
-                // Append the alert element to the container
-                alertContainer.appendChild(alertDiv);
-
-                // Remove the alert element after a certain duration
-                setTimeout(() => {
-                   alertDiv.remove();
-                }, 4000);
-
-                console.log('Item added to cart successfully');
-             } else {
-                console.error('Error adding item to cart');
-             }
-          })
-          .catch(error => {
-             console.error('Error:', error);
-          });
-
-       return false; // Prevent the default form submission behavior
-    }
-
-</script>
 
 {% endblock %}

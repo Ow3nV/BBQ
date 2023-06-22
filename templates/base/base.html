@@ -16,6 +16,12 @@
   .modal-body ul li {
     margin-bottom: 10px;
   }
+
+#cart-items{
+ display:inline-block;
+ line-height:45px;
+ text-decoration:none;
+ border-bottom:3px solid"}
 </style>
 
 
@@ -24,6 +30,7 @@
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
   <link rel="stylesheet" href="{% static 'style.css' %}">
   <nav class="navbar navbar-expand-lg navbar navbar-light" id="nav_color">
       <a class="navbar-brand" href={% url 'home' %}>Home</a>
@@ -99,11 +106,11 @@
         <h5 class="modal-title" id="cartModalLabel">Cart</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <div class="modal-body ">
+      <div class="modal-body" id="cartContainer">
         {% if 'cart' in request.session %}
         <ul>
           {% for bbq_id, bbq_name in request.session.cart.items %}
-          <li class="d-flex justify-content-between align-items-center" style="display:inline-block;line-height:45px;text-decoration:none;border-bottom:3px solid">
+          <li class="d-flex justify-content-between align-items-center" id="cartItems">
             <span >- {{ bbq_name }}</span>
             <a href="#" class="delete-link" onclick="return removeFromCart(event, '{{ bbq_id }}', '{{ bbq_name }}')">
               <img src="/static/images/bin.png" alt="Delete" width="20" height="20">

@@ -2,6 +2,7 @@ from django.contrib import messages
 from django.contrib.auth.models import User
 from django.db.models.functions import Lower
 from django.http import HttpResponse
+from django.http import JsonResponse
 from django.shortcuts import render, redirect
 
 from bbqweb.forms import BarbequeForm
@@ -90,14 +91,15 @@ def add_to_cart(request, barbeque_id):
     request.session['cart'] = cart
 
     # Output the updated cart to verify
-    print('Cart:', cart)
+    #print('Cart:', cart)
 
     # Redirect the user to the desired page after adding to the cart
-
-    return HttpResponse()
+    return JsonResponse({'cart': cart})
+    #return HttpResponse()
 
 
 def remove_from_cart(request, barbeque_id):
     del request.session['cart'][barbeque_id]
     request.session.modified = True
+
     return HttpResponse()
