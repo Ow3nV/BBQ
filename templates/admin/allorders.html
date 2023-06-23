@@ -25,6 +25,11 @@
             <th scope="col">Start Date</th>
             <th scope="col">End Date</th>
             <th scope="col">Barbeque</th>
+            <th scope="col">Address Line 1</th>
+            <th scope="col">Address Line 2</th>
+            <th scope="col">Town / City</th>
+            <th scope="col">County</th>
+            <th scope="col">Postcode</th>
         </tr>
         </thead>
         <tbody>
@@ -34,7 +39,12 @@
                 <td>£{{ order.sub_total }}</td>
                 <td>{{ order.date_from|date:"D d-M-y" }}</td>
                 <td>{{ order.date_to|date:"D d-M-y" }}</td>
-                <td><a href="{% url 'view_bbq_rent' order.barbeque.id %}">BBQ Page</a></td>
+                <td><a href="{% url 'admin_view_bbq' order.barbeque.id %}">BBQ Page</a></td>
+                <td>{{ order.address_line_1 }}</td>
+                <td>{{ order.address_line_2 }}</td>
+                <td>{{ order.town_city }}</td>
+                <td>{{ order.county }}</td>
+                <td>{{ order.postcode }}</td>
             </tr>
         {% endfor %}
     </tbody>

@@ -9,4 +9,5 @@ urlpatterns = [
     path('bbq/<barbeque_id>/edit', views.edit_bbq, name='admin_edit'),
     path('bbq_delete/<barbeque_id>', views.delete_bbq, name='bbq_delete'),
     path('allorders', views.view_orders, name='admin_all_orders'),
+    path('view_user/<user_id>', views.view_user_order, name='view_user_order')
 ]

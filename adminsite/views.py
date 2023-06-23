@@ -1,4 +1,5 @@
 from django.contrib import messages
+from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 
 from bbqweb.forms import BarbequeForm, ImageForm
@@ -103,3 +104,11 @@ def view_orders(request):
         return render(request, "admin/allorders.html", {"orders": orders})
     messages.warning(request, "No Access")
     return redirect('home')
+
+
+def view_user_order(request, user_id):
+    if request.user.is_superuser:
+        userobj = User.objects.get(id=user_id)
+        return render(request, "admin/viewuserorder.html", {"userobj": userobj})
+    messages.warning(request, "No Access")
+    return redirect("home")
