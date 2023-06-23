@@ -168,7 +168,9 @@
                         </div>
                         <div class="d-flex justify-content-between">
                             <button type="submit" class="btn btn-primary">Apply Filter</button>
-                            <a href="{% url 'rent_a_bbq' %}" class="btn btn-secondary">Clear Filters</a>
+                            <input type="hidden" name="sort" value="{{ sort_option }}">
+                            <input type="hidden" name="query" value="{{ search }}">
+                            <a href="{% url 'rent_a_bbq' %}?{% if sort_option %}sort={{ sort_option }}{% endif %}{% if search %}&query={{ search }}{% endif %}" class="btn btn-secondary">Clear Filters</a>
                         </div>
                     </form>
                 </div>
@@ -180,7 +182,7 @@
                     Sort By: {% if sort_option == 'high' %}Price: High-Low{% elif sort_option == 'low' %}Price: Low-High{% elif sort_option == 'name' %}Name: A-Z{% else %}Default{% endif %}
                 </button>
                 <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="{% url 'rent_a_bbq' %}">Default</a></li>
+                    <li><a class="dropdown-item" href="{% url 'rent_a_bbq' %}?{% if search %}&query={{ search }}{% endif %}">Default</a></li>
                     <li><a class="dropdown-item" href="{% url 'rent_a_bbq' %}?sort=high{% if search %}&query={{ search }}{% endif %}">Price: High-Low</a></li>
                     <li><a class="dropdown-item" href="{% url 'rent_a_bbq' %}?sort=low{% if search %}&query={{ search }}{% endif %}">Price: Low-High</a></li>
                     <li><a class="dropdown-item" href="{% url 'rent_a_bbq' %}?sort=name{% if search %}&query={{ search }}{% endif %}">Name: A-Z</a></li>
