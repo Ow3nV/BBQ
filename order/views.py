@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 from django.utils.dateparse import parse_date
 
+from authenticate.models import UserAddress
 from bbqweb.models import Barbeque
 from order.forms import OrderForm, CalenderForm
 from order.models import Order
@@ -15,7 +16,12 @@ import pandas
 
 def checkout_bbq(request, barbeque_id):
     if request.user.is_authenticated:
-        form = OrderForm()
+        address_fields = UserAddress.objects.get(user=request.user)
+        form = OrderForm(initial={'email': request.user.email, 'name': request.user.get_full_name(),
+                                  'address_line_1': address_fields.address_line_1,
+                                  'address_line_2': address_fields.address_line_2,
+                                  'town_city': address_fields.town_city, 'county_state': address_fields.county_state,
+                                  'country': address_fields.country, 'postcode': address_fields.postcode})
         date_from = parse_date(request.session['date_from'])
         date_to = parse_date(request.session['date_to'])
         delivery = request.session['delivery']
