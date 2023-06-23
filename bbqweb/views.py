@@ -78,7 +78,12 @@ def view_bbq(request, barbeque_id):
         image_list.append(imgs.image4.url)
 
     return render(request, "bbq/viewbbqrent.html", {'bbq': bbq, 'imgs': image_list})
+def check_id_exists(id_number, dictionary):
+    for key, value in dictionary.items():
 
+        if key == id_number:
+            return True
+    return False
 
 def add_to_cart(request, barbeque_id):
     bbq = Barbeque.objects.get(id=barbeque_id)
@@ -90,17 +95,23 @@ def add_to_cart(request, barbeque_id):
     cart = request.session.get('cart', {})
 
     # Add the BBQ ID and name to the cart dictionary
-    cart[barbeque_id] = bbq_name
 
-    # Store the updated cart back in the session
-    request.session['cart'] = cart
+    if check_id_exists(barbeque_id, cart):
+        error_message = "Duplicate"
+        return HttpResponse(error_message, status=400)
+    else:
+        print(f"Thasddfadfasdfionary.")
+        cart[barbeque_id] = bbq_name
 
-    # Output the updated cart to verify
-    #print('Cart:', cart)
+        # Store the updated cart back in the session
+        request.session['cart'] = cart
 
-    # Redirect the user to the desired page after adding to the cart
-    return JsonResponse({'cart': cart})
-    #return HttpResponse()
+        # Output the updated cart to verify
+        #print('Cart:', cart)
+
+        # Redirect the user to the desired page after adding to the cart
+        return JsonResponse({'cart': cart})
+        #return HttpResponse()
 
 
 def remove_from_cart(request, barbeque_id):
@@ -108,3 +119,6 @@ def remove_from_cart(request, barbeque_id):
     request.session.modified = True
 
     return JsonResponse({'cart': request.session['cart']})
+
+def view_cart(request):
+    return request.session['cart']

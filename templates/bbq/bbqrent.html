@@ -63,22 +63,44 @@
     #sidebar-nav {
         width: 230px;
     }
+      .flash-animation {
+    animation: flash 1s;
+  }
 
+  @keyframes flash {
+    10% {
+      background-color: #4BB543;
+    }
+    70%{
+    background-color:#0dcaf0;}
+    100% {
+      background-color: #0dcaf0;
+    }
+  }
 </style>
 <script>
 
-    function addToCart(event, barbequeId, barbequeName) {
+    function addToCart(event, button, barbequeId, barbequeName) {
+
         fetch('/add_to_cart/' + barbequeId)
             .then(response => {
                 if (response.ok) {
+
                     return response.json(); // Parse the JSON response
+
                 } else {
-                    throw new Error('Error adding item to cart');
+                    console.log("already inc art")
+                    return
                 }
             })
             .then(data => {
+                button.classList.add('flash-animation');
+                setTimeout(function() {
+                  button.classList.remove('flash-animation');
+                }, 2000);
                 // Update the cart dynamically using the received data
                 const cart = data.cart;
+
 
                 // Construct the HTML string for cart items
                 let cartHTML = '<ul class="cart-list">';
@@ -100,27 +122,27 @@
                 const cartContainer = document.getElementById('cartContainer');
                 cartContainer.innerHTML = cartHTML;
                 // Create the alert element
-                const alertContainer = document.getElementById('alertContainer');
-                const alertDiv = document.createElement('div');
-                alertDiv.innerHTML = `
-                    <div class="alert alert-dark alert-dismissible" role="alert">
-                    <strong>${barbequeName}</strong> added to cart!
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                    </div>
-                `;
+<!--                const alertContainer = document.getElementById('alertContainer');-->
+<!--                const alertDiv = document.createElement('div');-->
+<!--                alertDiv.innerHTML = `-->
+<!--                    <div class="alert alert-dark alert-dismissible" role="alert">-->
+<!--                    <strong>${barbequeName}</strong> added to cart!-->
+<!--                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>-->
+<!--                    </div>-->
+<!--                `;-->
 
-                // Append the alert element to the container
-                alertContainer.appendChild(alertDiv);
+<!--                // Append the alert element to the container-->
+<!--                alertContainer.appendChild(alertDiv);-->
 
-                // Remove the alert element after a certain duration
-                setTimeout(() => {
-                    alertDiv.remove();
-                }, 4000);
+<!--                // Remove the alert element after a certain duration-->
+<!--                setTimeout(() => {-->
+<!--                    alertDiv.remove();-->
+<!--                }, 4000);-->
 
                 console.log('Item added to cart successfully');
             })
             .catch(error => {
-                console.error('Error:', error);
+                console.error('Error:');
             });
 
         return false; // Prevent the default form submission behavior
@@ -201,7 +223,7 @@
                             <h6 class="card-text">{{ x.rent }} per day</h6>
                             <div class="card-buttons">
                                <a href="{% url 'view_bbq_rent' x.id %}" style="width:50%" class="btn btn-success btn-custom">View details</a>
-                               <a href="#" onclick="addToCart(event, '{{ x.id }}', '{{ x.name }}')" class="btn btn-info btn-custom-sm" id="cartButton">
+                               <a href="#" onclick="addToCart(event, this, '{{ x.id }}', '{{ x.name }}')" class="btn btn-info btn-custom-sm" id="cartButton">
                                   <img src="/static/images/cart.png" alt="placeholder" width="30" height="30">
                                </a>
                             </div>
@@ -213,6 +235,10 @@
         </main>
     </div>
 </div>
+
+<style>
+
+</style>
 
 
 
