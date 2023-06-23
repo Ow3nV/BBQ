@@ -6,13 +6,14 @@
 {% block template %}
 
 <style>
-    .card-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-        gap: 20px;
-        margin-left: 10px; /* Add a slight margin to the left side */
-        margin-right: 10px;
-    }
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 400px); /* Set the desired width for each column */
+  gap: 20px;
+  margin-left: 30px; /* Add a slight margin to the left side */
+  margin-right: 10px;
+  justify-content: flex-start; /* Aligns the grid items to the left */
+}
 
     .card_style {
         background-color: #00ffff;
@@ -26,12 +27,13 @@
         width: 100%;
         max-width: 400px; /* Each card will have the same width */
         margin: 0 auto; /* Centers the card horizontally */
-        max-width: 400px;
+
     }
 
     .card img {
+        height:auto
         max-width: 100%;
-        height: auto;
+
     }
 
     .card-title,
@@ -187,7 +189,7 @@
             </div>
             <div class="row">
                 <div class="col-12">
-                    <div class="card-grid">
+                    <div class="card-grid" style="align">
                         {% for x in bbqs %}
                         <div class="card">
                             <a class="link-success" style="text-decoration: none;" href="{% url 'view_bbq_rent' x.id %}">
