@@ -40,12 +40,12 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav me-auto">
           <li class="nav-item">
-            <a class="nav-link" href={% url 'rent_a_bbq'%}>Rent a BBQ</a>
+            <a class="nav-link" href={% url 'rent_a_bbq' %}>Rent a BBQ</a>
           </li>
-        <div style="width:400px;">
-                <form class="d-flex" role="search">
-                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                    <button class="btn btn-outline-success" type="submit">Search</button>
+            <div style="width:400px;">
+                <form id="search-form" class="d-flex" role="search" action="{% url 'rent_a_bbq' %}" method="GET">
+                  <input id="search-input" class="form-control me-2" type="search" name="query" placeholder="Search" value="{% if search %}{{ search }}{% endif %}" aria-label="Search">
+                  <button id="search-button" class="btn btn-outline-success" type="submit">Search</button>
                 </form>
             </div>
         </ul>

@@ -179,9 +179,9 @@
                 </button>
                 <ul class="dropdown-menu">
                     <li><a class="dropdown-item" href="{% url 'rent_a_bbq' %}">Default</a></li>
-                    <li><a class="dropdown-item" href="{% url 'rent_a_bbq' %}?sort=high">Price: High-Low</a></li>
-                    <li><a class="dropdown-item" href="{% url 'rent_a_bbq' %}?sort=low">Price: Low-High</a></li>
-                    <li><a class="dropdown-item" href="{% url 'rent_a_bbq' %}?sort=name">Name: A-Z</a></li>
+                    <li><a class="dropdown-item" href="{% url 'rent_a_bbq' %}?sort=high{% if search %}&query={{ search }}{% endif %}">Price: High-Low</a></li>
+                    <li><a class="dropdown-item" href="{% url 'rent_a_bbq' %}?sort=low{% if search %}&query={{ search }}{% endif %}">Price: Low-High</a></li>
+                    <li><a class="dropdown-item" href="{% url 'rent_a_bbq' %}?sort=name{% if search %}&query={{ search }}{% endif %}">Name: A-Z</a></li>
                 </ul>
                 <button class="btn btn-info" data-bs-target="#sidebar" data-bs-toggle="collapse">Filters</button>
             </div>

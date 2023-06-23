@@ -20,6 +20,7 @@ def home(request):
 
 
 def bbq_rent(request):
+    search = request.GET.get('query')
     sort_option = request.GET.get('sort')
 
     if sort_option == 'high':
@@ -30,6 +31,9 @@ def bbq_rent(request):
         queryset = Barbeque.objects.order_by('name')
     else:
         queryset = Barbeque.objects.all()
+
+    if search:
+        queryset = queryset.filter(name__icontains=search)
 
     gas_filter = request.GET.get('gas')
     burners_filter = request.GET.get('burners')
@@ -49,6 +53,7 @@ def bbq_rent(request):
 
     context = {
         'bbqs': queryset,
+        'search': search,
         'filter_gas': gas_filter,
         'filter_burners': burners_filter,
         'filter_price_min': price_min_filter,
