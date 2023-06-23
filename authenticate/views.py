@@ -8,6 +8,8 @@ from .forms import NewUserForm, LoginForm
 from django.contrib.auth import login, authenticate, logout
 from django.contrib import messages
 
+from .models import UserAddress
+
 
 def register_request(request):
     if request.user.is_anonymous:
@@ -15,7 +17,18 @@ def register_request(request):
         if request.method == "POST":
             form = NewUserForm(request.POST)
             if form.is_valid():
-                user = form.save()
+                form.save()
+                user = User.objects.last()
+                address_line_1 = form.cleaned_data.get('address_line_1')
+                address_line_2 = form.cleaned_data.get('address_line_2')
+                town_city = form.cleaned_data.get('town_city')
+                county = form.cleaned_data.get('county_state')
+                country = form.cleaned_data.get('country')
+                postcode = form.cleaned_data.get('postcode')
+                address_data = UserAddress.objects.create(user=user, address_line_1=address_line_1,
+                                                          address_line_2=address_line_2, town_city=town_city,
+                                                          county_state=county, country=country, postcode=postcode)
+                address_data.save()
                 login(request, user)
                 messages.success(request, "Registration successful.")
                 return redirect("home")
@@ -66,7 +79,7 @@ def profile_view(request):
 
 def view_orders(request):
     if request.user.is_authenticated:
-        orders = Order.objects.filter(user_id=request.user.id)
+        orders = Order.objects.filter(email = request.user.email)
         return render(request, "auth/orders.html", {"orders": orders})
     messages.warning(request, "You are not logged in")
     return redirect('home')
