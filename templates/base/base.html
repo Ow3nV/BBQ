@@ -171,13 +171,39 @@
          function removeFromCart(event, bbqId, bbqName) {
           fetch('/remove_from_cart/' + bbqId)
             .then(response => {
-              if (response.ok) {
+                if (response.ok) {
+                    return response.json(); // Parse the JSON response
+                } else {
+                    throw new Error('Error adding item to cart');
+                }
+            })
+            .then(data => {
+                // Update the cart dynamically using the received data
+                const cart = data.cart;
+
+                // Construct the HTML string for cart items
+                let cartHTML = '<ul class="cart-list">';
+                for (const itemId in cart) {
+                    const itemName = cart[itemId];
+                    const itemHTML = `
+                        <li class="d-flex justify-content-between align-items-center">
+                            <span>- ${itemName}</span>
+                            <a href="#" class="delete-link" onclick="return removeFromCart(event, '${itemId}', '${itemName}')">
+                                <img src="/static/images/bin.png" alt="Delete" width="20" height="20">
+                            </a>
+                        </li>
+                    `;
+                    cartHTML += itemHTML;
+                }
+                cartHTML += `</ul>`;
+                const cartContainer = document.getElementById('cartContainer');
+                cartContainer.innerHTML = cartHTML;
                 // Create the alert element
                 const alertContainer = document.getElementById('alertContainer');
                 const alertDiv = document.createElement('div');
                 alertDiv.innerHTML = `
                   <div class="alert alert-dark alert-dismissible" role="alert">
-                    <strong>${bbqName}</strong> removed from cart! Please refresh your page for changes to go through.
+                    <strong>${bbqName}</strong> removed from cart!
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                   </div>
                 `;
@@ -190,9 +216,6 @@
                   alertDiv.remove();
                 }, 4000);
                 console.log('Item removed from cart successfully');
-              } else {
-                console.error('Error removing item from cart');
-              }
             })
             .catch(error => {
               console.error('Error:', error);

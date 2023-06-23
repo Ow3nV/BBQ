@@ -102,4 +102,4 @@ def remove_from_cart(request, barbeque_id):
     del request.session['cart'][barbeque_id]
     request.session.modified = True
 
-    return HttpResponse()
+    return JsonResponse({'cart': request.session['cart']})
