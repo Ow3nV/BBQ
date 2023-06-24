@@ -77,7 +77,10 @@
       background-color: #0dcaf0;
     }
   }
+
+
 </style>
+<script src="/static/brain.js"></script>
 <script>
 
 function addToCart(event, button, barbequeId, barbequeName) {
@@ -90,6 +93,7 @@ function addToCart(event, button, barbequeId, barbequeName) {
 
             } else {
                 console.log("already inc art")
+                displayAddedToCartBanner(".duplicate-banner")
                 errorOccurred = true
             }
         })
@@ -118,28 +122,10 @@ function addToCart(event, button, barbequeId, barbequeName) {
                     cartHTML += itemHTML;
                 }
                 cartHTML += '</ul>';
-
+                displayAddedToCartBanner(".popup-banner")
                 // Set the HTML content of the cartContainer element
                 const cartContainer = document.getElementById('cartContainer');
                 cartContainer.innerHTML = cartHTML;
-                // Create the alert element
-//                    const alertContainer = document.getElementById('alertContainer');
- //                   const alertDiv = document.createElement('div');
-  //                  alertDiv.innerHTML = `
-   //                     <div class="alert alert-dark alert-dismissible" role="alert">
-    //                    <strong>${barbequeName}</strong> added to cart!
-     //                   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-      //                  </div>
-      //               `;
-//
-      //              // Append the alert element to the container
-     //               alertContainer.appendChild(alertDiv);
-//
-    //                // Remove the alert element after a certain duration
-    //                setTimeout(() => {
-    //                    alertDiv.remove();
-    //                }, 4000);
-
                 console.log('Item added to cart successfully');
             }
         })
@@ -155,7 +141,9 @@ function addToCart(event, button, barbequeId, barbequeName) {
 
 
 
+
 </script>
+
 <div id="alertContainer"></div>
 <div class="container-fluid">
     <div class="row flex-nowrap">
@@ -227,7 +215,7 @@ function addToCart(event, button, barbequeId, barbequeName) {
                             <h6 class="card-text">{{ x.rent }} per day</h6>
                             <div class="card-buttons">
                                <a href="{% url 'view_bbq_rent' x.id %}" style="width:50%" class="btn btn-success btn-custom">View details</a>
-                               <a href="#" onclick="addToCart(event, this, '{{ x.id }}', '{{ x.name }}')" class="btn btn-info btn-custom-sm" id="cartButton">
+                               <a href="#" onclick="addToCart(event, this, '{{ x.id }}', '{{ x.name }}');" class="btn btn-info btn-custom-sm" id="cartButton">
                                   <img src="/static/images/cart.png" alt="placeholder" width="30" height="30">
                                </a>
                             </div>
@@ -240,9 +228,7 @@ function addToCart(event, button, barbequeId, barbequeName) {
     </div>
 </div>
 
-<style>
 
-</style>
 
 
 
