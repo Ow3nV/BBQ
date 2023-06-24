@@ -153,9 +153,11 @@
 #dropdown-background {
   background-color: lightblue;
 }
+
 .modal-body ul li {
   margin-bottom: 10px;
 }
+
 body {
   display: flex;
   align-items: center;

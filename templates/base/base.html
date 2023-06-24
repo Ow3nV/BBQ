@@ -90,7 +90,7 @@
               <a class="btn btn dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                 <img src="/static/images/profilePlaceholder.png" alt="placeholder" width="30" height="30">
               </a>
-              <ul class="dropdown-menu dropdown-menu-end">
+              <ul class="dropdown-menu dropdown-menu-end" id="dropdown-background">
                   {% if user.is_authenticated %}
                     <li><a class="dropdown-item" href={% url 'profile' %}>Profile</a></li>
                     <li><a class="dropdown-item" href={% url 'view_order' %}>View orders</a></li>

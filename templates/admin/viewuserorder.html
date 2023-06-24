@@ -3,6 +3,11 @@
     BBQ Rental - Profile
 {% endblock %}
 {% block template %}
+    <style>
+        #nav_color{
+          background-color: #EE4B2B
+        }
+    </style>
     <h4>Name: {{ order.name }}</h4>
 	<h4>Email: {{ order.email }}</h4>
     <h4>Total: £{{ order.sub_total }}</h4>
