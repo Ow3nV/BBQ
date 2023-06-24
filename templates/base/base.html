@@ -94,11 +94,11 @@
                   {% if user.is_authenticated %}
                     <li><a class="dropdown-item" href={% url 'profile' %}>Profile</a></li>
                     <li><a class="dropdown-item" href={% url 'view_order' %}>View orders</a></li>
-                    <li><a class="dropdown-item" href="#">View basket</a></li>
+                    <li><a class="dropdown-item" href="{% url 'summary' %}">View basket</a></li>
                     <li><hr class="dropdown-divider"></li>
                     <li><a class="dropdown-item" href={% url 'logout' %}>Log out</a></li>
                   {% else %}
-                    <li><a class="dropdown-item" href="#">View basket</a></li>
+                    <li><a class="dropdown-item" href="{% url 'summary' %}">View basket</a></li>
                     <li><hr class="dropdown-divider"></li>
                     <li><a class="dropdown-item" href={% url 'register' %}>Register</a></li>
                     <li><a class="dropdown-item" href={% url 'login' %}>Log in</a></li>
