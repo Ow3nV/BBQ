@@ -21,7 +21,30 @@
  display:inline-block;
  line-height:45px;
  text-decoration:none;
- border-bottom:3px solid"}
+ border-bottom:3px solid"
+}
+
+ #popup {
+  position: fixed;
+  top: 5%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 400px;
+  background-color: #A9A9A9;
+  padding: 10px;
+  text-align: center;
+  display: none;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  z-index:100;
+}
+
+#popup p {
+  margin: 0;
+  font-size: 16px;
+  color: #333;
+}
 </style>
 
 
@@ -71,9 +94,12 @@
                   {% if user.is_authenticated %}
                     <li><a class="dropdown-item" href={% url 'profile' %}>Profile</a></li>
                     <li><a class="dropdown-item" href={% url 'view_order' %}>View orders</a></li>
+                    <li><a class="dropdown-item" href="#">View basket</a></li>
                     <li><hr class="dropdown-divider"></li>
                     <li><a class="dropdown-item" href={% url 'logout' %}>Log out</a></li>
                   {% else %}
+                    <li><a class="dropdown-item" href="#">View basket</a></li>
+                    <li><hr class="dropdown-divider"></li>
                     <li><a class="dropdown-item" href={% url 'register' %}>Register</a></li>
                     <li><a class="dropdown-item" href={% url 'login' %}>Log in</a></li>
                   {% endif %}
@@ -212,23 +238,7 @@
                     } else{
                         cartContainer.innerHTML = cartHTML;
                     }
-                // Create the alert element
-                const alertContainer = document.getElementById('alertContainer');
-                const alertDiv = document.createElement('div');
-                alertDiv.innerHTML = `
-                  <div class="alert alert-dark alert-dismissible" role="alert">
-                    <strong>${bbqName}</strong> removed from cart!
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                  </div>
-                `;
-
-                // Append the alert element to the container
-                alertContainer.appendChild(alertDiv);
-
-                // Remove the alert element after a certain duration
-                setTimeout(() => {
-                  alertDiv.remove();
-                }, 4000);
+               displayAddedToCartBanner(".remove-banner")
                 console.log('Item removed from cart successfully');
             })
             .catch(error => {
@@ -239,6 +249,14 @@
         }
 
  </script>
-
+    <div class="popup-banner" id="popup">
+      <p><strong>Added to Cart</strong><br>Click the basket icon or your profile dropdown to checkout</p>
+    </div>
+    <div class="duplicate-banner" id="popup">
+      <p><strong>Item already in cart!</strong><br>Click the basket icon or your profile dropdown to checkout</p>
+    </div>
+    <div class="remove-banner" id="popup">
+      <p><strong>Item removed from cart</strong></strong>
+    </div>
   </body>
 </html>
