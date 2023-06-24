@@ -4,7 +4,7 @@ from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 
 from order.models import Order
-from .forms import NewUserForm, LoginForm
+from .forms import NewUserForm, LoginForm, AddressForm
 from django.contrib.auth import login, authenticate, logout
 from django.contrib import messages
 
@@ -81,5 +81,20 @@ def view_orders(request):
     if request.user.is_authenticated:
         orders = Order.objects.filter(email = request.user.email)
         return render(request, "auth/orders.html", {"orders": orders})
+    messages.warning(request, "You are not logged in")
+    return redirect('home')
+
+
+def edit_address(request):
+    if request.user.is_authenticated:
+        address = UserAddress.objects.get(user=request.user)
+        form = AddressForm(instance=address)
+        if request.method == "POST":
+            form = AddressForm(request.POST, instance=address)
+            if form.is_valid():
+                form.save()
+                messages.success(request, "Address Edited")
+                return redirect("profile")
+        return render(request, "auth/edit_address.html", {"form": form})
     messages.warning(request, "You are not logged in")
     return redirect('home')

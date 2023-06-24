@@ -2,6 +2,9 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.core.validators import EmailValidator, RegexValidator
+from django.forms import ModelForm
+
+from authenticate.models import UserAddress
 
 
 # Create your forms here.
@@ -33,3 +36,9 @@ class NewUserForm(UserCreationForm):
 class LoginForm(forms.Form):
     username = forms.CharField(max_length=50, required=True, help_text="Enter your username")
     password = forms.CharField(widget=forms.PasswordInput, required=True, help_text="Enter your password.")
+
+
+class AddressForm(ModelForm):
+    class Meta:
+        model = UserAddress
+        fields = ("address_line_1", "address_line_2", "town_city", "county_state", "country", "postcode")
