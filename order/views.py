@@ -47,7 +47,6 @@ def checkout_bbq(request, barbeque_id):
         if form.is_valid():
             order = form.save(commit=False)
             order.barbeque = bbq
-            order.user = User.objects.get(id=request.user.id)
             order.delivery = delivery
             order.pick_up = pick_up
             order.date_from = date_from
@@ -81,3 +80,7 @@ def checkout_calender(request, barbeque_id):
             return redirect("checkout_bbq", barbeque_id)
         messages.error(request, "Unsuccessful Invalid information.")
     return render(request, "bbq/calenderform.html", {'form': form, 'unavailable_dates': all_dates})
+
+
+def checkout_guest(request,barbeque_id):
+    return render(request, "bbq/checkoutasguest.html", {'barbeque': barbeque_id})

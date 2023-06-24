@@ -188,10 +188,10 @@
                 <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Warning:"><use xlink:href="#info-fill"/></svg>
             {% endif %}
             {{ message }}
-        {% endfor %}
-          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
           </button>
         </div>
+        {% endfor %}
     {% endif %}
     <div id="alertContainer"></div>
     {% block template %}
