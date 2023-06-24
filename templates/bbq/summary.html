@@ -1,9 +1,62 @@
 {% extends "base/base.html" %}
+{% load static %}
 {% block title %}
     BBQ Rental - Home
 {% endblock %}
 {% block template %}
+<style>
+.body {
+      display: flex;
 
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+}
+
+.box {
+   margin-top:5%;
+  background-color: #f2f2f2;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  padding: 20px;
+  width: 50%;
+  height:65%;
+  max-width: 600px;
+
+}
+
+.content {
+  text-align: center;
+}
+
+</style>
+<div class="body">
+    <div class="box">
+      <div class="content">
+        Your Content<br><br>
+          <div class="modal-body" id="cartContainer">
+          {% if 'cart' in request.session %}
+            {% if request.session.cart.items %}
+              <ul>
+                {% for bbq_id, bbq_name in request.session.cart.items %}
+                  <li class="d-flex justify-content-between align-items-center" id="cartItems">
+                    <span>- {{ bbq_name }}</span>
+                    <a href="#" class="delete-link" onclick="return removeFromCart(event, '{{ bbq_id }}', '{{ bbq_name }}')">
+                      <img src="/static/images/bin.png" alt="Delete" width="20" height="20">
+                    </a>
+                  </li>
+                {% endfor %}
+              </ul>
+            {% else %}
+              <p>Your cart is empty.</p>
+            {% endif %}
+          {% else %}
+            <p>Your cart is empty.</p>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+<div>
 
 
 {% endblock %}
