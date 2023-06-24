@@ -3,6 +3,18 @@
     BBQ Rental - Profile
 {% endblock %}
 {% block template %}
-    <h4>Username: {{ userobj.username }}</h4>
-	<h4>Email: {{ userobj.email }}</h4>
+    <h4>Name: {{ order.name }}</h4>
+	<h4>Email: {{ order.email }}</h4>
+    <h4>Total: £{{ order.sub_total }}</h4>
+    <h4>Start Date: {{ order.date_from|date:"D-d/M/Y" }}</h4>
+    <h4>End Date: {{ order.date_to|date:"D-d/M/Y" }}</h4>
+    <h4>Address Line 1: {{ order.address_line_1 }}</h4>
+    <h4>Address Line 2: {{ order.address_line_2 }}</h4>
+    <h4>Town / City: {{ order.town_city }}</h4>
+    <h4>County / State: {{ order.county_state }}</h4>
+    <h4>Country: {{ order.country }}</h4>
+    <h4>Postcode: {{ order.postcode }}</h4>
+    <h4>Delivery: {{ order.delivery }}</h4>
+    <h4>Pick Up: {{ order.pickup }}</h4>
+    <a href="{% url 'admin_view_bbq' order.barbeque.id %}">BBQ</a>
 {% endblock %}

@@ -1,0 +1,80 @@
+{% extends "base/base.html" %}
+{% block title %}
+    Admin- Calender
+{% endblock %}
+{% block template %}
+    <style>
+    #calendar {
+        max-width: 1100px;
+        margin: 40px auto;
+        color: white;
+    }
+    .fc-daygrid-day-number {
+        color: white !important;
+    }
+    .fc-toolbar-title {
+        color: white;
+    }
+    </style>
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js'></script>
+    <script>
+        function getRandomColor(index) {
+          var colors = [
+            '#FFC107', '#9C27B0', '#3F51B5', '#009688', '#4CAF50', '#FF5722', '#607D8B', '#E91E63', '#2196F3',
+            '#FF9800', '#673AB7', '#03A9F4', '#8BC34A', '#CDDC39', '#FFEB3B', '#FF4081', '#00BCD4', '#4CAF50',
+            '#F44336', '#FFEB3B', '#9C27B0', '#3F51B5', '#00BCD4', '#FFC107', '#4CAF50', '#607D8B', '#E91E63',
+            '#2196F3', '#FF5722', '#FF9800', '#03A9F4', '#CDDC39', '#9E9E9E', '#795548', '#00E676', '#FF4081',
+            '#FF1744', '#2962FF', '#00BFA5', '#827717', '#64FFDA', '#FFD600', '#BF360C', '#DD2C00', '#AEEA00',
+            '#6A1B9A', '#00E5FF', '#C51162', '#3D5AFE', '#6200EA', '#D500F9', '#00E676', '#00BFA5', '#827717',
+            '#FFEA00', '#2962FF', '#FF3D00', '#D50000', '#E65100', '#F57F17', '#FF6D00', '#64FFDA', '#00E5FF',
+            '#1DE9B6', '#AEEA00', '#304FFE', '#00B8D4', '#4E342E', '#C6FF00', '#FFAB00', '#B71C1C', '#F44336',
+            '#FF5722', '#FF8F00', '#FFD600', '#00C853', '#64DD17', '#00C853', '#1B5E20', '#0091EA', '#00B8D4',
+            '#006064', '#01579B', '#311B92', '#6200EA', '#4A148C', '#D500F9', '#AA00FF', '#FF1744', '#FF3D00',
+            '#FF6D00', '#FF9100', '#FFAB00', '#FFC400', '#FFD740', '#FFEA00', '#C6FF00', '#00E676', '#1B5E20',
+            '#00BFA5', '#00B8D4', '#01579B', '#2962FF', '#304FFE', '#6200EA', '#AA00FF', '#D50000', '#C51162',
+            '#880E4F', '#4A148C', '#311B92', '#1A237E', '#0D47A1', '#01579B', '#006064', '#004D40', '#1B5E20',
+            '#33691E', '#827717', '#F57F17', '#FF6F00', '#E65100', '#BF360C', '#B71C1C', '#880E4F', '#4A148C',
+            '#311B92', '#1A237E', '#0D47A1', '#01579B', '#006064', '#004D40', '#1B5E20', '#33691E', '#827717',
+            '#F57F17', '#FF6F00', '#E65100', '#BF360C', '#B71C1C', '#880E4F', '#4A148C', '#311B92', '#1A237E',
+            '#0D47A1', '#01579B', '#006064', '#004D40', '#1B5E20', '#33691E', '#827717', '#F57F17', '#FF6F00',
+            '#E65100', '#BF360C', '#B71C1C', '#880E4F', '#4A148C', '#311B92', '#1A237E', '#0D47A1', '#01579B',
+            '#006064', '#004D40', '#1B5E20', '#33691E', '#827717', '#F57F17', '#FF6F00', '#E65100', '#BF360C',
+            '#B71C1C', '#880E4F', '#4A148C', '#311B92', '#1A237E', '#0D47A1', '#01579B', '#006064', '#004D40',
+            '#1B5E20', '#33691E', '#827717', '#F57F17', '#FF6F00', '#E65100', '#BF360C', '#B71C1C', '#880E4F',
+            '#4A148C', '#311B92', '#1A237E', '#0D47A1', '#01579B', '#006064', '#004D40', '#1B5E20', '#33691E',
+            '#827717', '#F57F17', '#FF6F00', '#E65100', '#BF360C', '#B71C1C', '#880E4F', '#4A148C', '#311B92',
+            '#1A237E', '#0D47A1', '#01579B', '#006064', '#004D40', '#1B5E20', '#33691E', '#827717', '#F57F17',
+            '#FF6F00', '#E65100', '#BF360C', '#B71C1C'
+          ];
+          var colorIndex = (index) % colors.length;  // Adjust index to match array length
+          return colors[colorIndex];
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+          var calendarEl = document.getElementById('calendar');
+
+          var calendar = new FullCalendar.Calendar(calendarEl, {
+            initialView: 'dayGridMonth',
+            headerToolbar: {
+              left: 'prev,next today',
+              center: 'title',
+              right: 'dayGridMonth,timeGridWeek,timeGridDay'
+            },
+            events: [
+              {% for event in events %}
+              {
+                title: '{{ event.title }}',
+                start: '{{ event.start }}',
+                end: '{{ event.end }}',
+                url: '{{ event.url }}',
+                color: getRandomColor({{ forloop.counter }}),
+              },
+              {% endfor %}
+            ]
+          });
+
+          calendar.render();
+        });
+    </script>
+    <div id='calendar'></div>
+{% endblock %}
