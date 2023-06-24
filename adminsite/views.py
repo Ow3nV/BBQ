@@ -1,6 +1,9 @@
+from datetime import timedelta
+
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
+from django.urls import reverse
 
 from bbqweb.forms import BarbequeForm, ImageForm
 from bbqweb.models import Barbeque, Images
@@ -106,9 +109,29 @@ def view_orders(request):
     return redirect('home')
 
 
-def view_user_order(request, user_id):
+def view_user_order(request, order_id):
     if request.user.is_superuser:
-        userobj = User.objects.get(id=user_id)
-        return render(request, "admin/viewuserorder.html", {"userobj": userobj})
+        orderobj = Order.objects.get(id=order_id)
+        return render(request, "admin/viewuserorder.html", {"order": orderobj})
+    messages.warning(request, "No Access")
+    return redirect("home")
+
+
+def view_calendar(request):
+    if request.user.is_superuser:
+        all_dates = Order.objects.all()
+        order_events = []
+
+        for order in all_dates:
+            date_from = order.date_from
+            date_to = order.date_to + timedelta(days=1)  # Include the end date in the range
+            order_events.append({
+                'title': Barbeque.objects.get(id=order.barbeque_id).name,  # Event title
+                'start': date_from.strftime('%Y-%m-%d'),  # Start date
+                'end': date_to.strftime('%Y-%m-%d'),  # End date (next day)
+                'url': reverse('view_user_order', args=[order.id]),
+            })
+        return render(request, "admin/calender.html", {'events': order_events})
+
     messages.warning(request, "No Access")
     return redirect("home")
