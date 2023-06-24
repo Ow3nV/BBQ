@@ -1,0 +1,10 @@
+{% extends "base/base.html" %}
+{% block title %}
+    BBQ Rental - Home
+{% endblock %}
+{% block template %}
+    <h3>Would you like to check out as guest? </h3>
+    <a class="btn btn-success" href="{% url 'checkout_calender' barbeque %}">Yes</a>
+    <a class="btn btn-danger" href="{% url 'rent_a_bbq' %}">No</a>
+    <a class="btn btn-info" href="{% url 'register' %}">No I want to Register</a>
+{% endblock %}
