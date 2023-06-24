@@ -84,3 +84,6 @@ def checkout_calender(request, barbeque_id):
 
 def checkout_guest(request,barbeque_id):
     return render(request, "bbq/checkoutasguest.html", {'barbeque': barbeque_id})
+
+def summary(request):
+    return render(request, "bbq/summary.html")

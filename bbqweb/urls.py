@@ -8,4 +8,5 @@ urlpatterns = [
     path('bbqrent/<barbeque_id>', views.view_bbq, name='view_bbq_rent'),
     path('add_to_cart/<barbeque_id>', views.add_to_cart, name='add_to_cart'),
     path('remove_from_cart/<barbeque_id>/', views.remove_from_cart, name='remove_from_cart'),
+
 ]
