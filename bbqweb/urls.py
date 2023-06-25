@@ -10,4 +10,5 @@ urlpatterns = [
     path('remove_from_cart/<barbeque_id>/', views.remove_from_cart, name='remove_from_cart'),
     path('remove_from_final_cart/<barbeque_id>/', views.remove_from_final_cart, name='remove_from_final_cart'),
     path('availability/<barbeque_id>/', views.view_availability, name='bbq_availability'),
+    path('get_bbq_image/<bbq_id>/', views.get_bbq_image, name='get_bbq_image'),
 ]

@@ -5,7 +5,6 @@
     BBQ Rental - Home
 {% endblock %}
 {% block template %}
-
 <style>
 .body {
       display: flex;
@@ -20,9 +19,8 @@
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   border-radius: 10px;
   padding: 20px;
-  width:79%;
+  width: 69%;
   height:65%;
-
 }
 
 .content {
@@ -30,11 +28,6 @@
 }
 #cartButton {
     display: none;
-}
-.bbqImg{
-  max-width:200px;
-  height:150px;
-  object-fit: cover;
 }
 </style>
 <div class="body">
@@ -46,22 +39,16 @@
             {% if request.session.cart.items %}
               <ul>
                 {% for bbq_id, bbq_name in request.session.cart.items %}
-                  <li class="d-flex justify-content-between align-items-center" id="cartItems" style="
-                      display: flex;
-                      justify-content: space-between;
-                      align-items: center;
-                      border: 1px solid #000;
-                      padding: 10px;
-                  ">
+                  <li class="d-flex justify-content-between align-items-center" id="cartItems">
 
-                    <img src="{{ bbq_id|get_bbq_image_url }}" alt="Barbeque Image" class="bbqImg">
+                    <img src="{{ bbq_id|get_bbq_image_url }}" alt="Barbeque Image" width="50" height="50">
                     <span>
-                        {{ bbq_name }}
+                        - {{ bbq_name }}
                     </span>
 
 
 
-                    <a href="#" class="delete-link" onclick="return removeFromEndCart(event, '{{ bbq_id }}', '{{ bbq_name }}','{{ bbq_id|get_bbq_image_url }}')">
+                    <a href="#" class="delete-link" onclick="return removeFromEndCart(event, '{{ bbq_id }}', '{{ bbq_name }}')">
                       <img src="/static/images/bin.png" alt="Delete" width="20" height="20">
                     </a>
                   </li>
@@ -79,9 +66,8 @@
 <div>
 
 <script>
-  function removeFromEndCart(event, bbqId, bbqName, img) {
-  console.log(img)
-          fetch('/remove_from_final_cart/' + bbqId)
+  function removeFromEndCart(event, bbqId, bbqName) {
+          fetch('/remove_from_cart/' + bbqId)
             .then(response => {
                 if (response.ok) {
                     return response.json(); // Parse the JSON response
@@ -92,38 +78,28 @@
             .then(data => {
                 // Update the cart dynamically using the received data
                 const cart = data.cart;
-  console.log(cart)
-
+                const images = data.images;
+                let i=0;
                 // Construct the HTML string for cart items
                 let cartHTML = '<ul class="cart-list">';
                 for (const itemId in cart) {
                     const itemName = cart[itemId];
                     const itemHTML = `
-                        <li class="d-flex justify-content-between align-items-center" id="cartItems" style="
-                      display: flex;
-                      justify-content: space-between;
-                      align-items: center;
-                      border: 1px solid #000;
-                      padding: 10px;
-                  ">
-                    <img src=${img} alt="Barbeque Image" class="bbqImg">
-                    <span>
-                        ${itemName}
-                    </span>
-
-
-
-                    <a href="#" class="delete-link" onclick="return removeFromEndCart(event, '${itemId}', '${itemName}')">
-                      <img src="/static/images/bin.png" alt="Delete" width="20" height="20">
-                    </a>
-                  </li>
+                        <li class="d-flex justify-content-between align-items-center">
+                            <img src="${images[i]}" alt="Barbeque Image" width="50" height="50">
+                            <span>- ${itemName}</span>
+                            <a href="#" class="delete-link" onclick="return removeFromEndCart(event, '${itemId}', '${itemName}')">
+                                <img src="/static/images/bin.png" alt="Delete" width="20" height="20">
+                            </a>
+                        </li>
                     `;
                     cartHTML += itemHTML;
+                    i+=1;
                 }
 
                 cartHTML += `</ul>`;
                 const cartContainer = document.getElementById('cartContainer1');
-
+                console.log(cartHTML)
                     if( Object.keys(cart).length < 1){
                         cartContainer.innerHTML = "Your cart is empty";
                     } else{

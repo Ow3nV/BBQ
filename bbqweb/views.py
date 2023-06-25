@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 from django.db.models.functions import Lower
 from django.http import HttpResponse
 from django.http import JsonResponse
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 
 from bbqweb.forms import BarbequeForm
 from bbqweb.models import Barbeque, Images
@@ -81,12 +81,15 @@ def view_bbq(request, barbeque_id):
         image_list.append(imgs.image4.url)
 
     return render(request, "bbq/viewbbqrent.html", {'bbq': bbq, 'imgs': image_list})
+
+
 def check_id_exists(id_number, dictionary):
     for key, value in dictionary.items():
 
         if key == id_number:
             return True
     return False
+
 
 def add_to_cart(request, barbeque_id):
     bbq = Barbeque.objects.get(id=barbeque_id)
@@ -117,11 +120,16 @@ def add_to_cart(request, barbeque_id):
         #return HttpResponse()
 
 
+
 def remove_from_cart(request, barbeque_id):
     del request.session['cart'][barbeque_id]
     request.session.modified = True
+    imgs = []
+    for item in request.session['cart']:
+        img = Barbeque.objects.get(id=item).image.url
+        imgs.append(img)
+    return JsonResponse({'cart': request.session['cart'], 'images': imgs})
 
-    return JsonResponse({'cart': request.session['cart']})
 
 def remove_from_final_cart(request, barbeque_id):
     bbq = Barbeque.objects.get(id=barbeque_id).image
@@ -129,6 +137,8 @@ def remove_from_final_cart(request, barbeque_id):
     request.session.modified = True
     print(bbq.url)
     return JsonResponse({'cart': request.session['cart'], 'image':bbq.url})
+
+
 def view_cart(request):
     return request.session['cart']
 
@@ -147,3 +157,9 @@ def view_availability(request, barbeque_id):
             'end': date_to.strftime('%Y-%m-%d'),  # End date (next day)
         })
     return render(request, "bbq/bbqavailability.html", {'events': order_events})
+
+def get_bbq_image(request, bbq_id):
+    bbq = get_object_or_404(Barbeque, id=bbq_id)
+    image_url = bbq.image.url  # Assuming the Barbeque model has an 'image' field
+
+    return JsonResponse({'image_url': image_url})

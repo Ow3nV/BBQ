@@ -60,8 +60,6 @@ def edit_bbq(request, barbeque_id):
         return redirect('home')
 
 
-
-
 def view_all_bbq(request):
     if request.user.is_superuser:
         bbqs = Barbeque.objects.all()
