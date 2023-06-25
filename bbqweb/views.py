@@ -123,6 +123,12 @@ def remove_from_cart(request, barbeque_id):
 
     return JsonResponse({'cart': request.session['cart']})
 
+def remove_from_final_cart(request, barbeque_id):
+    bbq = Barbeque.objects.get(id=barbeque_id).image
+    del request.session['cart'][barbeque_id]
+    request.session.modified = True
+    print(bbq.url)
+    return JsonResponse({'cart': request.session['cart'], 'image':bbq.url})
 def view_cart(request):
     return request.session['cart']
 
