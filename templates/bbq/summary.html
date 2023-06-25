@@ -1,4 +1,5 @@
 {% extends "base/base.html" %}
+{% load bbq_filters %}
 {% load static %}
 {% block title %}
     BBQ Rental - Home
@@ -43,8 +44,11 @@
                 {% for bbq_id, bbq_name in request.session.cart.items %}
                   <li class="d-flex justify-content-between align-items-center" id="cartItems">
 
+                    <img src="{{ bbq_id|get_bbq_image_url }}" alt="Barbeque Image" width="50" height="50">
+                    <span>
+                        - {{ bbq_name }}
+                    </span>
 
-                    <span>- {{ bbq_name }}</span>
 
 
                     <a href="#" class="delete-link" onclick="return removeFromEndCart(event, '{{ bbq_id }}', '{{ bbq_name }}')">
