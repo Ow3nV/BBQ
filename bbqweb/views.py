@@ -140,4 +140,4 @@ def view_availability(request, barbeque_id):
             'start': date_from.strftime('%Y-%m-%d'),  # Start date
             'end': date_to.strftime('%Y-%m-%d'),  # End date (next day)
         })
-    return render(request, "admin/calender.html", {'events': order_events})
+    return render(request, "bbq/bbqavailability.html", {'events': order_events})
