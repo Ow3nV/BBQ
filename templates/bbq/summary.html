@@ -5,9 +5,11 @@
 {% endblock %}
 {% block template %}
 <style>
+
+</style>
+<style>
 .body {
       display: flex;
-
       justify-content: center;
       height: 100vh;
       margin: 0;
@@ -19,29 +21,33 @@
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   border-radius: 10px;
   padding: 20px;
-  width: 50%;
+  width: 69%;
   height:65%;
-  max-width: 600px;
-
 }
 
 .content {
   text-align: center;
 }
-
+#cartButton {
+    display: none;
+}
 </style>
 <div class="body">
     <div class="box">
       <div class="content">
         Your Content<br><br>
-          <div class="modal-body" id="cartContainer">
+          <div class="modal-body" id="cartContainer1">
           {% if 'cart' in request.session %}
             {% if request.session.cart.items %}
               <ul>
                 {% for bbq_id, bbq_name in request.session.cart.items %}
                   <li class="d-flex justify-content-between align-items-center" id="cartItems">
+
+
                     <span>- {{ bbq_name }}</span>
-                    <a href="#" class="delete-link" onclick="return removeFromCart(event, '{{ bbq_id }}', '{{ bbq_name }}')">
+
+
+                    <a href="#" class="delete-link" onclick="return removeFromEndCart(event, '{{ bbq_id }}', '{{ bbq_name }}')">
                       <img src="/static/images/bin.png" alt="Delete" width="20" height="20">
                     </a>
                   </li>
@@ -58,5 +64,52 @@
     </div>
 <div>
 
+<script>
+  function removeFromEndCart(event, bbqId, bbqName) {
+          fetch('/remove_from_cart/' + bbqId)
+            .then(response => {
+                if (response.ok) {
+                    return response.json(); // Parse the JSON response
+                } else {
+                    throw new Error('Error removing from cart');
+                }
+            })
+            .then(data => {
+                // Update the cart dynamically using the received data
+                const cart = data.cart;
 
+
+                // Construct the HTML string for cart items
+                let cartHTML = '<ul class="cart-list">';
+                for (const itemId in cart) {
+                    const itemName = cart[itemId];
+                    const itemHTML = `
+                        <li class="d-flex justify-content-between align-items-center">
+                            <span>- ${itemName}</span>
+                            <a href="#" class="delete-link" onclick="return removeFromEndCart(event, '${itemId}', '${itemName}')">
+                                <img src="/static/images/bin.png" alt="Delete" width="20" height="20">
+                            </a>
+                        </li>
+                    `;
+                    cartHTML += itemHTML;
+                }
+
+                cartHTML += `</ul>`;
+                const cartContainer = document.getElementById('cartContainer1');
+                console.log(cartHTML)
+                    if( Object.keys(cart).length < 1){
+                        cartContainer.innerHTML = "Your cart is empty";
+                    } else{
+                        cartContainer.innerHTML = cartHTML;
+                    }
+               displayAddedToCartBanner(".remove-banner")
+                console.log('Item removed from cart successfully');
+            })
+            .catch(error => {
+              console.error('Error:', error);
+            });
+
+          return false; // Prevent the default behavior (e.g., navigating to a URL if this is an anchor element)
+        }
+</script>
 {% endblock %}
