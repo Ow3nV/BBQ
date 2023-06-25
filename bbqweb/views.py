@@ -1,3 +1,5 @@
+from datetime import timedelta
+
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.db.models.functions import Lower
@@ -8,6 +10,7 @@ from django.shortcuts import render, redirect
 from bbqweb.forms import BarbequeForm
 from bbqweb.models import Barbeque, Images
 from order.forms import OrderForm
+from order.models import Order
 
 
 # Create your views here.
@@ -122,3 +125,19 @@ def remove_from_cart(request, barbeque_id):
 
 def view_cart(request):
     return request.session['cart']
+
+
+def view_availability(request, barbeque_id):
+    bbq = Barbeque.objects.get(id=barbeque_id)
+    all_dates = Order.objects.filter(barbeque=bbq)
+    order_events = []
+
+    for order in all_dates:
+        date_from = order.date_from
+        date_to = order.date_to + timedelta(days=1)  # Include the end date in the range
+        order_events.append({
+            'title': bbq.name,  # Event title
+            'start': date_from.strftime('%Y-%m-%d'),  # Start date
+            'end': date_to.strftime('%Y-%m-%d'),  # End date (next day)
+        })
+    return render(request, "admin/calender.html", {'events': order_events})

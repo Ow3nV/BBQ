@@ -1,5 +1,5 @@
 #gaytest{
-    background-color: #696969;
+    background-color: black;
     overflow-x: hidden;
 }
 .carousel-item {
@@ -87,7 +87,7 @@
 }
 
 #nav_color{
-    background-color: #75fffb;
+    background-color: lightblue;
 }
 
 .desktop-content {
@@ -156,14 +156,6 @@
 
 .modal-body ul li {
   margin-bottom: 10px;
-}
-
-body {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
-  margin: 0;
 }
 
 .box {
